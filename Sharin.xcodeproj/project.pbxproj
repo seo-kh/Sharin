@@ -9,41 +9,33 @@
 /* Begin PBXBuildFile section */
 		AA01F47129C606E200D0115A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F47029C606E200D0115A /* AppDelegate.swift */; };
 		AA01F47329C606E200D0115A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F47229C606E200D0115A /* SceneDelegate.swift */; };
-		AA01F47529C606E200D0115A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F47429C606E200D0115A /* ViewController.swift */; };
-		AA01F47829C606E200D0115A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47629C606E200D0115A /* Main.storyboard */; };
+		AA01F47529C606E200D0115A /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F47429C606E200D0115A /* ContentViewController.swift */; };
 		AA01F47A29C606E400D0115A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47929C606E400D0115A /* Assets.xcassets */; };
 		AA01F47D29C606E400D0115A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */; };
 		AA01F48E29C6089600D0115A /* tv_retro.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48529C6089200D0115A /* tv_retro.usdz */; };
 		AA01F48F29C6089600D0115A /* wateringcan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48629C6089200D0115A /* wateringcan.usdz */; };
 		AA01F49029C6089600D0115A /* flower_tulip.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48729C6089300D0115A /* flower_tulip.usdz */; };
-		AA01F49129C6089600D0115A /* sneaker_pegasustrail.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48829C6089300D0115A /* sneaker_pegasustrail.usdz */; };
 		AA01F49229C6089600D0115A /* gramophone.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48929C6089400D0115A /* gramophone.usdz */; };
-		AA01F49329C6089600D0115A /* chair_swan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48A29C6089400D0115A /* chair_swan.usdz */; };
-		AA01F49429C6089600D0115A /* sneaker_airforce.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48B29C6089500D0115A /* sneaker_airforce.usdz */; };
-		AA01F49529C6089600D0115A /* cup_saucer_set.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48C29C6089500D0115A /* cup_saucer_set.usdz */; };
-		AA01F49629C6089600D0115A /* teapot.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48D29C6089600D0115A /* teapot.usdz */; };
 		AA01F49929C60A5C00D0115A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F49829C60A5C00D0115A /* UIColor+.swift */; };
+		AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7288129C61CC2007FD4EC /* UITabBar+.swift */; };
+		AAA7288429C61D24007FD4EC /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7288329C61D24007FD4EC /* CALayer+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AA01F46D29C606E200D0115A /* Sharin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA01F47029C606E200D0115A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AA01F47229C606E200D0115A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		AA01F47429C606E200D0115A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AA01F47729C606E200D0115A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AA01F47429C606E200D0115A /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		AA01F47929C606E400D0115A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA01F47C29C606E400D0115A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA01F47E29C606E400D0115A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA01F48529C6089200D0115A /* tv_retro.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = tv_retro.usdz; sourceTree = "<group>"; };
 		AA01F48629C6089200D0115A /* wateringcan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wateringcan.usdz; sourceTree = "<group>"; };
 		AA01F48729C6089300D0115A /* flower_tulip.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = flower_tulip.usdz; sourceTree = "<group>"; };
-		AA01F48829C6089300D0115A /* sneaker_pegasustrail.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = sneaker_pegasustrail.usdz; sourceTree = "<group>"; };
 		AA01F48929C6089400D0115A /* gramophone.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = gramophone.usdz; sourceTree = "<group>"; };
-		AA01F48A29C6089400D0115A /* chair_swan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = chair_swan.usdz; sourceTree = "<group>"; };
-		AA01F48B29C6089500D0115A /* sneaker_airforce.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = sneaker_airforce.usdz; sourceTree = "<group>"; };
-		AA01F48C29C6089500D0115A /* cup_saucer_set.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = cup_saucer_set.usdz; sourceTree = "<group>"; };
-		AA01F48D29C6089600D0115A /* teapot.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = teapot.usdz; sourceTree = "<group>"; };
 		AA01F49829C60A5C00D0115A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		AAA7288129C61CC2007FD4EC /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
+		AAA7288329C61D24007FD4EC /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,9 +70,8 @@
 			children = (
 				AA01F47029C606E200D0115A /* AppDelegate.swift */,
 				AA01F47229C606E200D0115A /* SceneDelegate.swift */,
-				AA01F47429C606E200D0115A /* ViewController.swift */,
+				AA01F47429C606E200D0115A /* ContentViewController.swift */,
 				AA01F49729C60A4D00D0115A /* Extension */,
-				AA01F47629C606E200D0115A /* Main.storyboard */,
 				AA01F47929C606E400D0115A /* Assets.xcassets */,
 				AA01F48429C6088000D0115A /* contents */,
 				AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */,
@@ -92,13 +83,8 @@
 		AA01F48429C6088000D0115A /* contents */ = {
 			isa = PBXGroup;
 			children = (
-				AA01F48A29C6089400D0115A /* chair_swan.usdz */,
-				AA01F48C29C6089500D0115A /* cup_saucer_set.usdz */,
 				AA01F48729C6089300D0115A /* flower_tulip.usdz */,
 				AA01F48929C6089400D0115A /* gramophone.usdz */,
-				AA01F48B29C6089500D0115A /* sneaker_airforce.usdz */,
-				AA01F48829C6089300D0115A /* sneaker_pegasustrail.usdz */,
-				AA01F48D29C6089600D0115A /* teapot.usdz */,
 				AA01F48529C6089200D0115A /* tv_retro.usdz */,
 				AA01F48629C6089200D0115A /* wateringcan.usdz */,
 			);
@@ -109,6 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				AA01F49829C60A5C00D0115A /* UIColor+.swift */,
+				AAA7288329C61D24007FD4EC /* CALayer+.swift */,
+				AAA7288129C61CC2007FD4EC /* UITabBar+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -171,17 +159,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA01F49629C6089600D0115A /* teapot.usdz in Resources */,
 				AA01F47D29C606E400D0115A /* LaunchScreen.storyboard in Resources */,
 				AA01F47A29C606E400D0115A /* Assets.xcassets in Resources */,
-				AA01F49129C6089600D0115A /* sneaker_pegasustrail.usdz in Resources */,
-				AA01F49329C6089600D0115A /* chair_swan.usdz in Resources */,
-				AA01F49529C6089600D0115A /* cup_saucer_set.usdz in Resources */,
 				AA01F49229C6089600D0115A /* gramophone.usdz in Resources */,
 				AA01F48E29C6089600D0115A /* tv_retro.usdz in Resources */,
-				AA01F49429C6089600D0115A /* sneaker_airforce.usdz in Resources */,
 				AA01F49029C6089600D0115A /* flower_tulip.usdz in Resources */,
-				AA01F47829C606E200D0115A /* Main.storyboard in Resources */,
 				AA01F48F29C6089600D0115A /* wateringcan.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,9 +175,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA01F47529C606E200D0115A /* ViewController.swift in Sources */,
+				AA01F47529C606E200D0115A /* ContentViewController.swift in Sources */,
+				AAA7288429C61D24007FD4EC /* CALayer+.swift in Sources */,
 				AA01F49929C60A5C00D0115A /* UIColor+.swift in Sources */,
 				AA01F47129C606E200D0115A /* AppDelegate.swift in Sources */,
+				AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */,
 				AA01F47329C606E200D0115A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,14 +187,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AA01F47629C606E200D0115A /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AA01F47729C606E200D0115A /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -350,7 +326,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -380,7 +355,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
