@@ -19,8 +19,7 @@ class ContentViewController: UITabBarController {
         let communityViewController = UIViewController()
         communityViewController.view.backgroundColor = .systemRed
         communityViewController.tabBarItem = UITabBarItem(title: "커뮤니티", image: .init(systemName: "person.3"), selectedImage: .init(systemName: "person.3.fill"))
-        let cameraViewController = UIViewController()
-        cameraViewController.view.backgroundColor = .systemGreen
+        let cameraViewController = CameraViewController()
         cameraViewController.tabBarItem = UITabBarItem(title: "카메라", image: .init(systemName: "camera"), selectedImage: .init(systemName: "camera.fill"))
         let myPageViewController = UIViewController()
         myPageViewController.view.backgroundColor = .systemBlue
