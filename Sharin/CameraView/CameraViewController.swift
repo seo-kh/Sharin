@@ -51,9 +51,9 @@ final class CameraViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
         arView.session.pause()
         cancellables.removeAll()
+        super.viewWillDisappear(animated)
     }
     
     @objc private func didTap(_ sender: UITapGestureRecognizer) {
