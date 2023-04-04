@@ -9,11 +9,9 @@ import UIKit
 
 final class SharinButton: UIButton {
     let systemName: String
-    let action: () -> Void
     
-    init(systemName: String, action: @escaping () -> Void) {
+    init(systemName: String) {
         self.systemName = systemName
-        self.action = action
         super.init(frame: .zero)
         self.attribute()
         self.layout()
@@ -28,7 +26,6 @@ final class SharinButton: UIButton {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.imageView!.translatesAutoresizingMaskIntoConstraints = false
         self.addBlurEffect(style: .systemThickMaterial, cornerRadius: 16.0, padding: 3.0)
-        self.addAction(.init(handler: { [weak self] _ in self?.action() }), for: .touchUpInside)
     }
     
     private func layout() {

@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CombineCocoa
 import RealityKit
 import ARKit
 
@@ -34,23 +35,7 @@ final class CameraViewController: UIViewController {
         arView.session.delegate = self
         view = arView
         
-        let hStack = setHStack()
-        
-        Option.allCases
-            .forEach { option in
-                hStack.addArrangedSubview(SharinButton(systemName: option.systemName, action: {
-                    [unowned self] in
-                    switch option {
-                    case .find:
-                        // TODO: - Let's make a item picker
-                        let vc = ItemPickerViewContrller()
-                        vc.bind(to: self.vm.itemPickerViewModel)
-                        self.present(vc, animated: true)
-                    case .store:
-                        break
-                    }
-                }))
-            }
+        setButtonGroup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,7 +81,7 @@ final class CameraViewController: UIViewController {
                 case .failure(let error):
                     print(error)
                 case .finished:
-                    print("finish")
+                    break
                 }
             } receiveValue: { [weak self] entity in
                 entity.generateCollisionShapes(recursive: true)
@@ -107,23 +92,43 @@ final class CameraViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-    
-    private func setHStack() -> UIStackView {
-        let hStack = UIStackView()
-        hStack.axis = .horizontal
-        hStack.spacing = 24.0
-        hStack.alignment = .center
-        hStack.distribution = .equalSpacing
-        hStack.translatesAutoresizingMaskIntoConstraints = false
+}
+
+extension CameraViewController {
+    func setButtonGroup() {
+        // UI
+        let hStack = UIStackView(axis: .horizontal, alignment: .center, spacing: 24.0)
+        let selectButton = SharinButton(systemName: Option.find.systemName)
+        selectButton.layer.name = Option.find.systemName
+        let memoryButton = SharinButton(systemName: Option.store.systemName)
+        memoryButton.layer.name = Option.store.systemName
         
+        // view hierarchy
+        hStack.addArrangedSubview(selectButton)
+        hStack.addArrangedSubview(memoryButton)
         view.addSubview(hStack)
         
+        // layout
         NSLayoutConstraint.activate([
             hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0),
-            hStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -12.0),
+            hStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -12.0)
         ])
         
-        return hStack
+        // function
+        selectButton.tapPublisher
+            .sink { [weak self] in
+                let vc = ItemPickerViewContrller()
+                vc.bind(to: (self?.vm.itemPickerViewModel)!)
+                self?.present(vc, animated: true)
+            }
+            .store(in: &cancellables)
+        
+        // TODO: - memory button
+        memoryButton.tapPublisher
+            .sink {
+                print("구현 예정")
+            }
+            .store(in: &cancellables)
     }
 }
 

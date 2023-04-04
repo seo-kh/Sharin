@@ -27,6 +27,8 @@
 		AAA314EE29D6A25C007502E2 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314ED29D6A25C007502E2 /* UIButton+.swift */; };
 		AAA314F029D6A2F8007502E2 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EF29D6A2F8007502E2 /* CALayer+.swift */; };
 		AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7288129C61CC2007FD4EC /* UITabBar+.swift */; };
+		AAC3C7AC29DC270800E7CE58 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = AAC3C7AB29DC270800E7CE58 /* CombineCocoa */; };
+		AAC3C7AE29DC285A00E7CE58 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3C7AD29DC285A00E7CE58 /* UIStackView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,7 @@
 		AAA314ED29D6A25C007502E2 /* UIButton+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		AAA314EF29D6A2F8007502E2 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		AAA7288129C61CC2007FD4EC /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
+		AAC3C7AD29DC285A00E7CE58 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAC3C7AC29DC270800E7CE58 /* CombineCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +120,7 @@
 				AAA314ED29D6A25C007502E2 /* UIButton+.swift */,
 				AAA7288129C61CC2007FD4EC /* UITabBar+.swift */,
 				AAA314EF29D6A2F8007502E2 /* CALayer+.swift */,
+				AAC3C7AD29DC285A00E7CE58 /* UIStackView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -165,6 +170,9 @@
 			dependencies = (
 			);
 			name = Sharin;
+			packageProductDependencies = (
+				AAC3C7AB29DC270800E7CE58 /* CombineCocoa */,
+			);
 			productName = Sharin;
 			productReference = AA01F46D29C606E200D0115A /* Sharin.app */;
 			productType = "com.apple.product-type.application";
@@ -193,6 +201,9 @@
 				Base,
 			);
 			mainGroup = AA01F46429C606E200D0115A;
+			packageReferences = (
+				AAC3C7AA29DC270800E7CE58 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+			);
 			productRefGroup = AA01F46E29C606E200D0115A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -233,6 +244,7 @@
 				AAA314F029D6A2F8007502E2 /* CALayer+.swift in Sources */,
 				AAA314E529D6A201007502E2 /* ItemPickerViewController.swift in Sources */,
 				AAA314EC29D6A23D007502E2 /* 3DItem.swift in Sources */,
+				AAC3C7AE29DC285A00E7CE58 /* UIStackView+.swift in Sources */,
 				AA01F47129C606E200D0115A /* AppDelegate.swift in Sources */,
 				AAA314E329D6A201007502E2 /* CameraViewModel.swift in Sources */,
 				AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */,
@@ -450,6 +462,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AAC3C7AA29DC270800E7CE58 /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AAC3C7AB29DC270800E7CE58 /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAC3C7AA29DC270800E7CE58 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AA01F46529C606E200D0115A /* Project object */;
 }
