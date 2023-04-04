@@ -102,7 +102,7 @@ final class CameraViewController: UIViewController {
                 entity.generateCollisionShapes(recursive: true)
                 anchorEntity.addChild(entity)
                 self?.arView.scene.addAnchor(anchorEntity)
-                self?.arView.installGestures([.rotation, .translation], for: entity)
+                self?.arView.installGestures(.all, for: entity)
                 print("in loadEntity: ", asset)
             }
             .store(in: &cancellables)
