@@ -380,7 +380,7 @@
 				INFOPLIST_FILE = Sharin/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sharin;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME)이 카메라에 접근권한을 요청합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Sharin이 카메라에 접근권한을 요청합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -410,7 +410,7 @@
 				INFOPLIST_FILE = Sharin/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Sharin;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME)이 카메라에 접근권한을 요청합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Sharin이 카메라에 접근권한을 요청합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
