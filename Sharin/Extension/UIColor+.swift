@@ -8,8 +8,8 @@
 import UIKit
 
 extension UIColor {
-    static let sharinPrimary = UIColor(named: "sharinPrimary")
-    static let sharinSecondary = UIColor(named: "sharinSecondary")
-    static let sharinTertiary = UIColor(named: "sharinTertiary")
-    static let sharinQuaternary = UIColor(named: "sharinQuaternary")
+    static let sharinPrimary = UIColor(named: "sharinPrimary")!
+    static let sharinSecondary = UIColor(named: "sharinSecondary")!
+    static let sharinTertiary = UIColor(named: "sharinTertiary")!
+    static let sharinQuaternary = UIColor(named: "sharinQuaternary")!
 }

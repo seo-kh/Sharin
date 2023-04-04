@@ -18,11 +18,10 @@ final class FocusARView: ARView {
     }
     
     /// Style to be displayed in the example
-    let focusStyle: FocusStyleChoices = .color
+    let focusStyle: FocusStyleChoices = .classic
     var focusEntity: FocusEntity?
     required init(frame frameRect: CGRect) {
         super.init(frame: frameRect)
-        self.setupConfig()
         
         switch self.focusStyle {
         case .color:
@@ -51,11 +50,5 @@ final class FocusARView: ARView {
     
     @MainActor required dynamic init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupConfig() {
-        let config = ARWorldTrackingConfiguration()
-        config.planeDetection = [.horizontal, .vertical]
-        session.run(config)
     }
 }
