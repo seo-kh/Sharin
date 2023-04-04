@@ -12,22 +12,11 @@ import RealityKit
 import ARKit
 
 final class CameraViewController: UIViewController {
-    
-    enum Option: CaseIterable {
-        case find
-        case store
-        
-        var systemName: String {
-            switch self {
-            case .find: return "magnifyingglass"
-            case .store: return "square.and.arrow.down"
-            }
-        }
-    }
 
-    private var cancellables = Set<AnyCancellable>()
     let vm = CameraViewModel()
+    let coachingOverlay = ARCoachingOverlayView()
     var arView: ARView!
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +25,7 @@ final class CameraViewController: UIViewController {
         view = arView
         
         setButtonGroup()
+        setupCoachingOverlay()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +35,7 @@ final class CameraViewController: UIViewController {
         config.planeDetection = [.vertical, .horizontal]
         arView.session.run(config)
         
+        // place any object
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
         arView.addGestureRecognizer(recognizer)
 
@@ -70,7 +61,16 @@ final class CameraViewController: UIViewController {
         }
     }
     
-    private func loadEntity(for anchor: ARAnchor) {
+}
+
+extension CameraViewController {
+    func resetTracking() {
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.horizontal, .vertical]
+        arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
+    func loadEntity(for anchor: ARAnchor) {
         let anchorEntity = AnchorEntity(anchor: anchor)
         
         guard let asset = vm.asset else { return }
@@ -92,12 +92,11 @@ final class CameraViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-}
-
-extension CameraViewController {
+    
     func setButtonGroup() {
         // UI
         let hStack = UIStackView(axis: .horizontal, alignment: .center, spacing: 24.0)
+        hStack.tag = 1
         let selectButton = SharinButton(systemName: Option.find.systemName)
         selectButton.layer.name = Option.find.systemName
         let memoryButton = SharinButton(systemName: Option.store.systemName)
@@ -106,7 +105,7 @@ extension CameraViewController {
         // view hierarchy
         hStack.addArrangedSubview(selectButton)
         hStack.addArrangedSubview(memoryButton)
-        view.addSubview(hStack)
+        arView.addSubview(hStack)
         
         // layout
         NSLayoutConstraint.activate([
@@ -129,15 +128,5 @@ extension CameraViewController {
                 print("구현 예정")
             }
             .store(in: &cancellables)
-    }
-}
-
-extension CameraViewController: ARSessionDelegate {
-    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
-        for anchor in anchors {
-            if let anchorName = anchor.name, anchorName == "anchor" {
-                loadEntity(for: anchor)
-            }
-        }
     }
 }
