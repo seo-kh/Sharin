@@ -15,12 +15,14 @@ final class CameraViewController: UIViewController {
 
     let vm = CameraViewModel()
     let coachingOverlay = ARCoachingOverlayView()
-    var arView: ARView!
+//    var arView: ARView!
+    var arView: FocusARView!
     private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
+//        arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
+        arView = FocusARView(frame: .zero)
         arView.session.delegate = self
         view = arView
         

@@ -32,6 +32,8 @@
 		AAC3C7B329DC62CC00E7CE58 /* CameraViewController+Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3C7B229DC62CC00E7CE58 /* CameraViewController+Option.swift */; };
 		AAC3C7B529DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3C7B429DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift */; };
 		AAC3C7B729DC656700E7CE58 /* CameraViewController+ARSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3C7B629DC656700E7CE58 /* CameraViewController+ARSessionDelegate.swift */; };
+		AAC3C7BA29DC719E00E7CE58 /* FocusEntity in Frameworks */ = {isa = PBXBuildFile; productRef = AAC3C7B929DC719E00E7CE58 /* FocusEntity */; };
+		AAC3C7BC29DC721800E7CE58 /* FocusARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC3C7BB29DC721800E7CE58 /* FocusARView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +63,7 @@
 		AAC3C7B229DC62CC00E7CE58 /* CameraViewController+Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+Option.swift"; sourceTree = "<group>"; };
 		AAC3C7B429DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+ARCoachingOverlayViewDelegate.swift"; sourceTree = "<group>"; };
 		AAC3C7B629DC656700E7CE58 /* CameraViewController+ARSessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraViewController+ARSessionDelegate.swift"; sourceTree = "<group>"; };
+		AAC3C7BB29DC721800E7CE58 /* FocusARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusARView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAC3C7BA29DC719E00E7CE58 /* FocusEntity in Frameworks */,
 				AAC3C7AC29DC270800E7CE58 /* CombineCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,8 +143,9 @@
 			children = (
 				AAA314DB29D6A201007502E2 /* SharinButton.swift */,
 				AAA314DC29D6A201007502E2 /* CameraViewModel.swift */,
-				AAA314DD29D6A201007502E2 /* ItemPickerView */,
 				AAA314E129D6A201007502E2 /* CameraViewController.swift */,
+				AAC3C7BB29DC721800E7CE58 /* FocusARView.swift */,
+				AAA314DD29D6A201007502E2 /* ItemPickerView */,
 			);
 			path = CameraView;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 			name = Sharin;
 			packageProductDependencies = (
 				AAC3C7AB29DC270800E7CE58 /* CombineCocoa */,
+				AAC3C7B929DC719E00E7CE58 /* FocusEntity */,
 			);
 			productName = Sharin;
 			productReference = AA01F46D29C606E200D0115A /* Sharin.app */;
@@ -212,6 +218,7 @@
 			mainGroup = AA01F46429C606E200D0115A;
 			packageReferences = (
 				AAC3C7AA29DC270800E7CE58 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				AAC3C7B829DC719E00E7CE58 /* XCRemoteSwiftPackageReference "FocusEntity" */,
 			);
 			productRefGroup = AA01F46E29C606E200D0115A /* Products */;
 			projectDirPath = "";
@@ -258,6 +265,7 @@
 				AAC3C7AE29DC285A00E7CE58 /* UIStackView+.swift in Sources */,
 				AAC3C7B529DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift in Sources */,
 				AA01F47129C606E200D0115A /* AppDelegate.swift in Sources */,
+				AAC3C7BC29DC721800E7CE58 /* FocusARView.swift in Sources */,
 				AAA314E329D6A201007502E2 /* CameraViewModel.swift in Sources */,
 				AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */,
 				AA01F47329C606E200D0115A /* SceneDelegate.swift in Sources */,
@@ -484,6 +492,14 @@
 				minimumVersion = 0.4.1;
 			};
 		};
+		AAC3C7B829DC719E00E7CE58 /* XCRemoteSwiftPackageReference "FocusEntity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxxfrazer/FocusEntity.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -491,6 +507,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AAC3C7AA29DC270800E7CE58 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
+		};
+		AAC3C7B929DC719E00E7CE58 /* FocusEntity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AAC3C7B829DC719E00E7CE58 /* XCRemoteSwiftPackageReference "FocusEntity" */;
+			productName = FocusEntity;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
