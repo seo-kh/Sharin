@@ -27,7 +27,7 @@ final class SharinButton: UIButton {
         self.setImage(UIImage(systemName: systemName), for: .normal)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.imageView!.translatesAutoresizingMaskIntoConstraints = false
-        self.addBlurEffect(style: .systemUltraThinMaterial, cornerRadius: 16.0, padding: 3.0)
+        self.addBlurEffect(style: .systemThickMaterial, cornerRadius: 16.0, padding: 3.0)
         self.addAction(.init(handler: { [weak self] _ in self?.action() }), for: .touchUpInside)
     }
     
