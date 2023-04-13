@@ -21,25 +21,30 @@ final class CameraViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
         arView = FocusARView(frame: .zero)
         arView.session.delegate = self
         view = arView
         
-        setButtonGroup()
+        setAttributesAndLayouts()
         setupCoachingOverlay()
         bind()
     }
     
+    private let checkButton = SharinButton(systemName: "checkmark")
+    private let alertLabel = UILabel()
+    private let generator = UINotificationFeedbackGenerator()
+    
     private func bind() {
+        
         vm.assetName
             .map { $0 != nil }
             .sink { [weak self] isEnabled in
                 print(isEnabled)
                 self?.arView.focusEntity?.isEnabled = isEnabled
+                self?.checkButton.isHidden = !isEnabled
+                self?.checkButton.isEnabled = isEnabled
             }
             .store(in: &cancellables)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,8 +55,8 @@ final class CameraViewController: UIViewController {
         arView.session.run(config)
         
         // place any object
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
-        arView.addGestureRecognizer(recognizer)
+//        let recognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
+//        arView.addGestureRecognizer(recognizer)
 
     }
     
@@ -61,13 +66,20 @@ final class CameraViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    @objc private func didTap(_ sender: UITapGestureRecognizer) {
-        let position = sender.location(in: arView)
+    private func didTap() {
+        let position = arView.center
         let results = arView.raycast(from: position, allowing: .estimatedPlane, alignment: .any)
         
         // 해당 위치에 entity가 있으면 그 entity 선택
         if let entity = arView.entity(at: position) as? ModelEntity {
-            print("찾았다. ", entity.name)
+            generator.notificationOccurred(.error)
+            alertLabel.isEnabled = true
+            alertLabel.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                self?.alertLabel.isEnabled = false
+                self?.alertLabel.isHidden = true
+            }
+            
         // 해당 위치에 entity가 없으면 새로운 anchor추가
         } else if let first = results.first {
             let anchor = ARAnchor(name: "anchor", transform: first.worldTransform)
@@ -107,7 +119,7 @@ extension CameraViewController {
             .store(in: &cancellables)
     }
     
-    func setButtonGroup() {
+    func setAttributesAndLayouts() {
         // UI
         let hStack = UIStackView(axis: .horizontal, alignment: .center, spacing: 24.0)
         hStack.tag = 1
@@ -116,21 +128,38 @@ extension CameraViewController {
         let memoryButton = SharinButton(systemName: Option.store.systemName)
         memoryButton.layer.name = Option.store.systemName
         
+        
+        checkButton.tag = 2
+        checkButton.isEnabled = false
+        checkButton.isHidden = true
+        
+        alertLabel.translatesAutoresizingMaskIntoConstraints = false
+        alertLabel.text = "해당 위치에는 소품을 놓을 수 없어요!"
+        alertLabel.font = .preferredFont(forTextStyle: .title3)
+        alertLabel.backgroundColor = .sharinTertiary
+        alertLabel.isEnabled = false
+        alertLabel.isHidden = true
+        
         // view hierarchy
         hStack.addArrangedSubview(selectButton)
         hStack.addArrangedSubview(memoryButton)
         arView.addSubview(hStack)
+        arView.addSubview(checkButton)
+        arView.addSubview(alertLabel)
         
         // layout
         NSLayoutConstraint.activate([
             hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0),
-            hStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -12.0)
+            hStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -12.0),
+            checkButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20.0),
+            checkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            alertLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            alertLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
         
         // function
         selectButton.tapPublisher
             .sink { [weak self] in
-                print("눌림")
                 let vc = ItemPickerViewContrller()
                 vc.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
                 vc.bind(to: (self?.vm.itemPickerViewModel)!)
@@ -143,6 +172,10 @@ extension CameraViewController {
             .sink {
                 print("구현 예정")
             }
+            .store(in: &cancellables)
+        
+        checkButton.tapPublisher
+            .sink(receiveValue: {[weak self] in self?.didTap() })
             .store(in: &cancellables)
     }
 }
