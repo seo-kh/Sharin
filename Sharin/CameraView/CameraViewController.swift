@@ -28,6 +28,18 @@ final class CameraViewController: UIViewController {
         
         setButtonGroup()
         setupCoachingOverlay()
+        bind()
+    }
+    
+    private func bind() {
+        vm.assetName
+            .map { $0 != nil }
+            .sink { [weak self] isEnabled in
+                print(isEnabled)
+                self?.arView.focusEntity?.isEnabled = isEnabled
+            }
+            .store(in: &cancellables)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,8 +130,9 @@ extension CameraViewController {
         // function
         selectButton.tapPublisher
             .sink { [weak self] in
+                print("눌림")
                 let vc = ItemPickerViewContrller()
-                vc.modalPresentationStyle = .fullScreen
+                vc.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
                 vc.bind(to: (self?.vm.itemPickerViewModel)!)
                 self?.present(vc, animated: true)
             }

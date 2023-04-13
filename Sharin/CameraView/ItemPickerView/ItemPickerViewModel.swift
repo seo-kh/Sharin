@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class ItemPickerViewModel: NSObject {
-    let itemPick = PassthroughSubject<String?, Never>()
+    let itemPick = CurrentValueSubject<String?, Never>(nil)
     private var cancellables = Set<AnyCancellable>()
 }
 
