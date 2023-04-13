@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CombineCocoa
 
 final class ItemPickerViewContrller: UIViewController {
     private var cancellables = Set<AnyCancellable>()
@@ -36,8 +37,20 @@ final class ItemPickerViewContrller: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.register(ItemCell.self, forCellWithReuseIdentifier: ItemCell.identifier)
         return collectionView
+    }()
+    
+    private lazy var dismissButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        
+        button.tapPublisher
+            .sink { [weak self] _ in self?.dismiss(animated: true) }
+            .store(in: &cancellables)
+        
+        return button
     }()
     
     override func viewDidLoad() {
@@ -69,10 +82,12 @@ final class ItemPickerViewContrller: UIViewController {
     }
     
     private func layout() {
-        [ titleLabel, itemLabel, seperator, collectionView ].forEach {
+        [ titleLabel, itemLabel, seperator, collectionView, dismissButton ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
+        
+        dismissButton.imageView!.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30.0),
@@ -95,6 +110,15 @@ final class ItemPickerViewContrller: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12.0),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            dismissButton.topAnchor.constraint(equalTo: titleLabel.topAnchor),
+            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12.0),
+            dismissButton.widthAnchor.constraint(equalToConstant: 30.0),
+            dismissButton.heightAnchor.constraint(equalToConstant: 30.0),
+            dismissButton.imageView!.widthAnchor.constraint(equalTo: dismissButton.widthAnchor, multiplier: 1.0),
+            dismissButton.imageView!.heightAnchor.constraint(equalTo: dismissButton.heightAnchor, multiplier: 1.0),
         ])
         
     }

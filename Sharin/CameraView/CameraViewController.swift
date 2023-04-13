@@ -119,6 +119,7 @@ extension CameraViewController {
         selectButton.tapPublisher
             .sink { [weak self] in
                 let vc = ItemPickerViewContrller()
+                vc.modalPresentationStyle = .fullScreen
                 vc.bind(to: (self?.vm.itemPickerViewModel)!)
                 self?.present(vc, animated: true)
             }
