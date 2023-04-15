@@ -9,7 +9,7 @@ import Combine
 import UIKit
 
 final class ItemPickerViewModel: NSObject {
-    let itemPick = CurrentValueSubject<String?, Never>(nil)
+    let itemPick = CurrentValueSubject<Item?, Never>(nil)
     private var cancellables = Set<AnyCancellable>()
 }
 
@@ -27,7 +27,7 @@ extension ItemPickerViewModel: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = Item.dummy[indexPath.item]
-        itemPick.send(item.usdzURL)
+        itemPick.send(item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

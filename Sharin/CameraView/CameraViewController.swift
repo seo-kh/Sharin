@@ -36,7 +36,7 @@ final class CameraViewController: UIViewController {
     
     private func bind() {
         
-        vm.assetName
+        vm.item
             .map { $0 != nil }
             .sink { [weak self] isEnabled in
                 print(isEnabled)
@@ -99,9 +99,11 @@ extension CameraViewController {
     func loadEntity(for anchor: ARAnchor) {
         let anchorEntity = AnchorEntity(anchor: anchor)
         
-        guard let asset = vm.asset else { return }
-        
-        Entity.loadModelAsync(named: asset)
+        vm.item
+            .compactMap { $0 }
+            .flatMap({ item -> LoadRequest<ModelEntity> in
+                return Entity.loadModelAsync(named: item.usdzURL)
+            })
             .sink { completion in
                 switch completion {
                 case .failure(let error):
@@ -114,7 +116,6 @@ extension CameraViewController {
                 anchorEntity.addChild(entity)
                 self?.arView.scene.addAnchor(anchorEntity)
                 self?.arView.installGestures(.all, for: entity)
-                print("in loadEntity: ", asset)
             }
             .store(in: &cancellables)
     }

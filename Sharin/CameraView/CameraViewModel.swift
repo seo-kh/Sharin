@@ -10,16 +10,12 @@ import Combine
 
 final class CameraViewModel {
     private var cancellables = Set<AnyCancellable>()
-    let assetName: AnyPublisher<String?, Never>
+    let item: AnyPublisher<Item?, Never>
     let itemPickerViewModel = ItemPickerViewModel()
-    var asset: String?
     
     init() {
-        self.assetName = itemPickerViewModel.itemPick
+        self.item = itemPickerViewModel
+                .itemPick
                 .eraseToAnyPublisher()
-        
-        assetName
-            .assign(to: \.asset, on: self)
-            .store(in: &cancellables)
     }
 }
