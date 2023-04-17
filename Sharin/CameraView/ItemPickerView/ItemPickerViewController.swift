@@ -45,11 +45,6 @@ final class ItemPickerViewContrller: UIViewController {
     private lazy var dismissButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
-        
-        button.tapPublisher
-            .sink { [weak self] _ in self?.dismiss(animated: true) }
-            .store(in: &cancellables)
-        
         return button
     }()
     
@@ -71,10 +66,10 @@ final class ItemPickerViewContrller: UIViewController {
     }
     
     func bind(to viewModel: ItemPickerViewModel) {
-        viewModel.itemPick
-            .sink(
-                receiveValue: { [weak self] _ in self?.dismiss(animated: true) }
-            )
+        viewModel.ipvc.send(self)
+        
+        dismissButton.tapPublisher
+            .subscribe(viewModel.dismiss)
             .store(in: &cancellables)
         
         collectionView.delegate = viewModel

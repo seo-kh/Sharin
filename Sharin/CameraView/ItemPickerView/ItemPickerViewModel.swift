@@ -10,6 +10,16 @@ import UIKit
 
 final class ItemPickerViewModel: NSObject {
     let itemPick = CurrentValueSubject<Item?, Never>(nil)
+    let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
+    let dismiss = PassthroughSubject<Void, Never>()
+    
+    override init() {
+        ipvc
+            .combineLatest(itemPick, dismiss)
+            .sink { $0.0.dismiss(animated: true) }
+            .store(in: &cancellables)
+    }
+    
     private var cancellables = Set<AnyCancellable>()
 }
 

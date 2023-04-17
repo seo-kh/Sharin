@@ -30,11 +30,11 @@ final class CameraViewController: UIViewController {
         bind()
     }
     
-    private let checkButton = SharinButton(systemName: "checkmark")
-    private let cancelButton = SharinButton(systemName: "xmark")
-    private let deleteButton = SharinButton(systemName: "trash")
-    private let alertLabel = UILabel()
-    private let generator = UINotificationFeedbackGenerator()
+    let checkButton = SharinButton(systemName: "checkmark")
+    let cancelButton = SharinButton(systemName: "xmark")
+    let deleteButton = SharinButton(systemName: "trash")
+    let alertLabel = UILabel()
+    let generator = UINotificationFeedbackGenerator()
     
     private func bind() {
         
@@ -45,6 +45,8 @@ final class CameraViewController: UIViewController {
                 self?.checkButton.isEnabled = isEnabled
                 self?.cancelButton.isHidden = !isEnabled
                 self?.cancelButton.isEnabled = isEnabled
+                self?.deleteButton.isHidden = !isEnabled
+                self?.deleteButton.isEnabled = isEnabled
             }
             .store(in: &cancellables)
     }
@@ -95,29 +97,7 @@ final class CameraViewController: UIViewController {
     
     }
     
-    private func didTap() {
-        let position = arView.center
-        let results = arView.raycast(from: position, allowing: .estimatedPlane, alignment: .any)
-        
-        // 해당 위치에 entity가 있으면 그 entity 선택
-        if let _ = arView.entity(at: position) as? ModelEntity {
-            generator.notificationOccurred(.error)
-            alertLabel.isEnabled = true
-            alertLabel.isHidden = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-                self?.alertLabel.isEnabled = false
-                self?.alertLabel.isHidden = true
-            }
-            
-            vm.animationController?.stop()
-            vm.animationController = nil
-            
-        // 해당 위치에 entity가 없으면 새로운 anchor추가
-        } else if let first = results.first {
-            let anchor = ARAnchor(name: "anchor", transform: first.worldTransform)
-            arView.session.add(anchor: anchor)
-        }
-    }
+    
     
 }
 
@@ -204,13 +184,10 @@ extension CameraViewController {
         ])
         
         // function
+        
         selectButton.tapPublisher
-            .sink { [weak self] in
-                let vc = ItemPickerViewContrller()
-                vc.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-                vc.bind(to: (self?.vm.itemPickerViewModel)!)
-                self?.present(vc, animated: true)
-            }
+            .map { self }
+            .subscribe(vm.select)
             .store(in: &cancellables)
         
         // TODO: - memory button
@@ -221,7 +198,8 @@ extension CameraViewController {
             .store(in: &cancellables)
         
         checkButton.tapPublisher
-            .sink(receiveValue: {[weak self] in self?.didTap() })
+            .map { self }
+            .subscribe(vm.check)
             .store(in: &cancellables)
         
         cancelButton.tapPublisher

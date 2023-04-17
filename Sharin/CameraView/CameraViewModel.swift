@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import RealityKit
+import ARKit
 
 final class CameraViewModel {
     private var cancellables = Set<AnyCancellable>()
@@ -18,35 +19,69 @@ final class CameraViewModel {
     let modelTranslator = CurrentValueSubject<ModelEntity?, Never>(nil)
     var animationController: AnimationPlaybackController?
     
+    let select = PassthroughSubject<CameraViewController, Never>()
+    let check = PassthroughSubject<CameraViewController, Never>()
+    
     init() {
+        
+        
         self.item = itemPickerViewModel
                 .itemPick
                 .eraseToAnyPublisher()
         
-        let isItemPicked = item
+        self.isActivate = itemPickerViewModel
+            .itemPick
             .map { $0 != nil }
-            .eraseToAnyPublisher()
-        
-        let isCancel = cancelAction
-            .map { false }
-            .eraseToAnyPublisher()
-        
-        
-        self.isActivate = isItemPicked
-            .merge(with: isCancel)
             .eraseToAnyPublisher()
 
         cancelAction
             .sink { [weak self] in self?.itemPickerViewModel.itemPick.send(nil) }
             .store(in: &cancellables)
         
+        select
+            .sink { [weak self] cvc in
+                guard let self = self else { return }
+                let vc = ItemPickerViewContrller()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.bind(to: self.itemPickerViewModel)
+                cvc.present(vc, animated: true)
+            }
+            .store(in: &cancellables)
+        
+        check
+            .sink { [weak self] in self?.didTap($0) }
+            .store(in: &cancellables)
+        
+    }
+    
+    func didTap(_ cvc: CameraViewController) {
+        let position = cvc.arView.center
+        let results = cvc.arView.raycast(from: position, allowing: .estimatedPlane, alignment: .any)
+        
+        // 해당 위치에 entity가 있으면 그 entity 선택
+        if let _ = cvc.arView.entity(at: position) as? ModelEntity {
+            cvc.generator.notificationOccurred(.error)
+            cvc.alertLabel.isEnabled = true
+            cvc.alertLabel.isHidden = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak cvc] in
+                cvc?.alertLabel.isEnabled = false
+                cvc?.alertLabel.isHidden = true
+            }
+            
+            animationController?.stop()
+            animationController = nil
+            
+        // 해당 위치에 entity가 없으면 새로운 anchor추가
+        } else if let first = results.first {
+            let anchor = ARAnchor(name: "anchor", transform: first.worldTransform)
+            cvc.arView.session.add(anchor: anchor)
+        }
     }
     
     func defineAnimation(relativeTo referenceEntity: Entity, isBack: Bool = false) -> AnimationResource {
         var from: Transform = referenceEntity.transform
         var to: Transform = referenceEntity.transform
         var animationDefinition: AnimationDefinition
-        let referenceTranslation = referenceEntity.transform.translation
         
         switch isBack {
         case false:
