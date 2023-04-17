@@ -31,18 +31,20 @@ final class CameraViewController: UIViewController {
     }
     
     private let checkButton = SharinButton(systemName: "checkmark")
+    private let cancelButton = SharinButton(systemName: "xmark")
     private let alertLabel = UILabel()
     private let generator = UINotificationFeedbackGenerator()
     
     private func bind() {
         
-        vm.item
-            .map { $0 != nil }
+        vm.isActivate
             .sink { [weak self] isEnabled in
                 print(isEnabled)
                 self?.arView.focusEntity?.isEnabled = isEnabled
                 self?.checkButton.isHidden = !isEnabled
                 self?.checkButton.isEnabled = isEnabled
+                self?.cancelButton.isHidden = !isEnabled
+                self?.cancelButton.isEnabled = isEnabled
             }
             .store(in: &cancellables)
     }
@@ -71,7 +73,7 @@ final class CameraViewController: UIViewController {
         let results = arView.raycast(from: position, allowing: .estimatedPlane, alignment: .any)
         
         // 해당 위치에 entity가 있으면 그 entity 선택
-        if let entity = arView.entity(at: position) as? ModelEntity {
+        if let _ = arView.entity(at: position) as? ModelEntity {
             generator.notificationOccurred(.error)
             alertLabel.isEnabled = true
             alertLabel.isHidden = false
@@ -129,7 +131,6 @@ extension CameraViewController {
         let memoryButton = SharinButton(systemName: Option.store.systemName)
         memoryButton.layer.name = Option.store.systemName
         
-        
         checkButton.tag = 2
         checkButton.isEnabled = false
         checkButton.isHidden = true
@@ -141,12 +142,17 @@ extension CameraViewController {
         alertLabel.isEnabled = false
         alertLabel.isHidden = true
         
+        cancelButton.tag = 3
+        cancelButton.isEnabled = false
+        cancelButton.isHidden = true
+        
         // view hierarchy
         hStack.addArrangedSubview(selectButton)
         hStack.addArrangedSubview(memoryButton)
         arView.addSubview(hStack)
         arView.addSubview(checkButton)
         arView.addSubview(alertLabel)
+        arView.addSubview(cancelButton)
         
         // layout
         NSLayoutConstraint.activate([
@@ -156,6 +162,8 @@ extension CameraViewController {
             checkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            cancelButton.topAnchor.constraint(equalTo: hStack.topAnchor),
+            cancelButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 12.0)
         ])
         
         // function
@@ -177,6 +185,10 @@ extension CameraViewController {
         
         checkButton.tapPublisher
             .sink(receiveValue: {[weak self] in self?.didTap() })
+            .store(in: &cancellables)
+        
+        cancelButton.tapPublisher
+            .subscribe(vm.cancelAction)
             .store(in: &cancellables)
     }
 }
