@@ -73,8 +73,15 @@ final class CameraViewController: UIViewController {
         if let entity = arView.entity(at: position) as? ModelEntity {
             generator.notificationOccurred(.success)
             
-            let animation = vm.defineAnimation(relativeTo: entity)
-            entity.playAnimation(animation)
+            if let controller = vm.animationController {
+                controller.stop()
+                let animation = vm.defineAnimation(relativeTo: entity, isBack: true)
+                vm.animationController = entity.playAnimation(animation)
+                vm.animationController = nil
+            } else {
+                let animation = vm.defineAnimation(relativeTo: entity)
+                vm.animationController = entity.playAnimation(animation)
+            }
         }
     
     }
@@ -92,6 +99,9 @@ final class CameraViewController: UIViewController {
                 self?.alertLabel.isEnabled = false
                 self?.alertLabel.isHidden = true
             }
+            
+            vm.animationController?.stop()
+            vm.animationController = nil
             
         // 해당 위치에 entity가 없으면 새로운 anchor추가
         } else if let first = results.first {

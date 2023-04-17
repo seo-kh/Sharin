@@ -16,6 +16,8 @@ final class CameraViewModel {
     let isActivate: AnyPublisher<Bool, Never>
     let cancelAction = PassthroughSubject<Void, Never>()
     
+    var animationController: AnimationPlaybackController?
+    
     init() {
         self.item = itemPickerViewModel
                 .itemPick
@@ -40,25 +42,42 @@ final class CameraViewModel {
         
     }
     
-    func defineAnimation(relativeTo referenceEntity: Entity) -> AnimationResource {
-        // 원래 위치에서 +y 방향으로 1cm 이동
-        var from = referenceEntity.transform
-        from.translation += [0.0, 0.01, 0.0]
-        // +y 방향으로 10cm 이동
-        var to = referenceEntity.transform
-        to.translation += [0.0, 0.10, 0.0]
+    func defineAnimation(relativeTo referenceEntity: Entity, isBack: Bool = false) -> AnimationResource {
+        var from: Transform = referenceEntity.transform
+        var to: Transform = referenceEntity.transform
+        var animationDefinition: AnimationDefinition
+        let referenceTranslation = referenceEntity.transform.translation
         
-        let upAndDownDefinition = FromToByAnimation(
-            name: "Up-and-Down",
-            from: from,
-            to: to,
-            duration: 2.0,
-            timing: .easeOut,
-            bindTarget: .transform,
-            repeatMode: .autoReverse
-        )
+        switch isBack {
+        case true:
+            // +y (위방향) 1cm이동
+            from.translation.y += 0.01
+            // +y (위방향) 5cm까지 이동
+            to .translation.y += 0.05
+            animationDefinition = FromToByAnimation(
+                name: "up-and-down",
+                from: from,
+                to: to,
+                duration: 2.0,
+                timing: .easeOut,
+                bindTarget: .transform,
+                repeatMode: .autoReverse
+            )
+        case false:
+            // -y (아래방향) 0 cm까지 이동
+            to.translation.y = 0.0
+            animationDefinition = FromToByAnimation(
+                name: "identity",
+                from: from,
+                to: to,
+                duration: 0.2,
+                timing: .easeOut,
+                bindTarget: .transform,
+                repeatMode: .none
+            )
+        }
         
-        return try! AnimationResource.generate(with: upAndDownDefinition)
+        return try! AnimationResource.generate(with: animationDefinition)
         
     }
 }
