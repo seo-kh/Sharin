@@ -32,6 +32,7 @@ final class CameraViewController: UIViewController {
     
     private let checkButton = SharinButton(systemName: "checkmark")
     private let cancelButton = SharinButton(systemName: "xmark")
+    private let deleteButton = SharinButton(systemName: "trash")
     private let alertLabel = UILabel()
     private let generator = UINotificationFeedbackGenerator()
     
@@ -82,6 +83,14 @@ final class CameraViewController: UIViewController {
                 let animation = vm.defineAnimation(relativeTo: entity)
                 vm.animationController = entity.playAnimation(animation)
             }
+            
+            deleteButton.isEnabled = true
+            deleteButton.isHidden = false
+            vm.modelTranslator.send(entity)
+                
+        } else {
+            deleteButton.isEnabled = false
+            deleteButton.isHidden = true
         }
     
     }
@@ -167,6 +176,10 @@ extension CameraViewController {
         cancelButton.isEnabled = false
         cancelButton.isHidden = true
         
+        deleteButton.tag = 4
+        deleteButton.isEnabled = false
+        deleteButton.isHidden = true
+        
         // view hierarchy
         hStack.addArrangedSubview(selectButton)
         hStack.addArrangedSubview(memoryButton)
@@ -174,6 +187,7 @@ extension CameraViewController {
         arView.addSubview(checkButton)
         arView.addSubview(alertLabel)
         arView.addSubview(cancelButton)
+        arView.addSubview(deleteButton)
         
         // layout
         NSLayoutConstraint.activate([
@@ -184,7 +198,9 @@ extension CameraViewController {
             alertLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             alertLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             cancelButton.topAnchor.constraint(equalTo: hStack.topAnchor),
-            cancelButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 12.0)
+            cancelButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 12.0),
+            deleteButton.leadingAnchor.constraint(equalTo: checkButton.trailingAnchor, constant: 40.0),
+            deleteButton.bottomAnchor.constraint(equalTo: checkButton.bottomAnchor)
         ])
         
         // function
@@ -211,5 +227,18 @@ extension CameraViewController {
         cancelButton.tapPublisher
             .subscribe(vm.cancelAction)
             .store(in: &cancellables)
+        
+        deleteButton.tapPublisher
+            .sink(receiveValue: { [weak self]  in
+                if let model = self?.vm.modelTranslator.value {
+                    model.parent?.removeFromParent()
+                }
+                
+                self?.deleteButton.isEnabled = false
+                self?.deleteButton.isHidden = true
+                self?.vm.modelTranslator.send(nil)
+            })
+            .store(in: &cancellables)
+    
     }
 }

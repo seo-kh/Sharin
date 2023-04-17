@@ -15,7 +15,7 @@ final class CameraViewModel {
     let itemPickerViewModel = ItemPickerViewModel()
     let isActivate: AnyPublisher<Bool, Never>
     let cancelAction = PassthroughSubject<Void, Never>()
-    
+    let modelTranslator = CurrentValueSubject<ModelEntity?, Never>(nil)
     var animationController: AnimationPlaybackController?
     
     init() {
@@ -49,7 +49,7 @@ final class CameraViewModel {
         let referenceTranslation = referenceEntity.transform.translation
         
         switch isBack {
-        case true:
+        case false:
             // +y (위방향) 1cm이동
             from.translation.y += 0.01
             // +y (위방향) 5cm까지 이동
@@ -61,9 +61,9 @@ final class CameraViewModel {
                 duration: 2.0,
                 timing: .easeOut,
                 bindTarget: .transform,
-                repeatMode: .autoReverse
+                repeatMode: .none
             )
-        case false:
+        case true:
             // -y (아래방향) 0 cm까지 이동
             to.translation.y = 0.0
             animationDefinition = FromToByAnimation(
