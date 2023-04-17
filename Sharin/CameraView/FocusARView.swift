@@ -40,7 +40,6 @@ final class FocusARView: ARView {
                 )
             } catch {
                 self.focusEntity = FocusEntity(on: self, focus: .classic)
-                print("Unable to load plane textures")
                 print(error.localizedDescription)
             }
         default:

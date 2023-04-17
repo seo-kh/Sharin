@@ -39,7 +39,6 @@ final class CameraViewController: UIViewController {
         
         vm.isActivate
             .sink { [weak self] isEnabled in
-                print(isEnabled)
                 self?.arView.focusEntity?.isEnabled = isEnabled
                 self?.checkButton.isHidden = !isEnabled
                 self?.checkButton.isEnabled = isEnabled
@@ -57,8 +56,8 @@ final class CameraViewController: UIViewController {
         arView.session.run(config)
         
         // place any object
-//        let recognizer = UITapGestureRecognizer(target: self, action: #selector(didTap))
-//        arView.addGestureRecognizer(recognizer)
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(didSelect))
+        arView.addGestureRecognizer(recognizer)
 
     }
     
@@ -66,6 +65,18 @@ final class CameraViewController: UIViewController {
         arView.session.pause()
         cancellables.removeAll()
         super.viewWillDisappear(animated)
+    }
+    
+    @objc private func didSelect(_ sender: UITapGestureRecognizer) {
+        let position = sender.location(in: arView)
+        
+        if let entity = arView.entity(at: position) as? ModelEntity {
+            generator.notificationOccurred(.success)
+            
+            let animation = vm.defineAnimation(relativeTo: entity)
+            entity.playAnimation(animation)
+        }
+    
     }
     
     private func didTap() {
