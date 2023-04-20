@@ -11,7 +11,7 @@ extension CameraViewController: ARSessionDelegate {
     func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
         for anchor in anchors {
             if let anchorName = anchor.name, anchorName == "anchor" {
-                loadEntity(for: anchor)
+                vm.loadEntity(for: anchor, cvc: self)
             }
         }
     }

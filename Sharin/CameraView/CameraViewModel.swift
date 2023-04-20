@@ -12,33 +12,32 @@ import ARKit
 
 final class CameraViewModel {
     private var cancellables = Set<AnyCancellable>()
-    let item: AnyPublisher<Item?, Never>
     let itemPickerViewModel = ItemPickerViewModel()
-    let isActivate: AnyPublisher<Bool, Never>
-    let cancelAction = PassthroughSubject<Void, Never>()
     let modelTranslator = CurrentValueSubject<ModelEntity?, Never>(nil)
+    let isActivate: AnyPublisher<Bool, Never>
     var animationController: AnimationPlaybackController?
     
-    let select = PassthroughSubject<CameraViewController, Never>()
+    let cancel = PassthroughSubject<Void, Never>()
+    let item = PassthroughSubject<CameraViewController, Never>()
     let check = PassthroughSubject<CameraViewController, Never>()
+    let select = PassthroughSubject<(UITapGestureRecognizer, CameraViewController), Never>()
     
     init() {
         
-        
-        self.item = itemPickerViewModel
-                .itemPick
-                .eraseToAnyPublisher()
         
         self.isActivate = itemPickerViewModel
             .itemPick
             .map { $0 != nil }
             .eraseToAnyPublisher()
-
-        cancelAction
-            .sink { [weak self] in self?.itemPickerViewModel.itemPick.send(nil) }
+        
+        cancel
+            .sink { [weak self] in
+                self?.itemPickerViewModel.itemPick.send(nil)
+                self?.modelTranslator.send(nil)
+            }
             .store(in: &cancellables)
         
-        select
+        item
             .sink { [weak self] cvc in
                 guard let self = self else { return }
                 let vc = ItemPickerViewContrller()
@@ -52,9 +51,41 @@ final class CameraViewModel {
             .sink { [weak self] in self?.didTap($0) }
             .store(in: &cancellables)
         
+        select
+            .sink { [weak self] gesture, cvc in
+                self?.didSelect(gesture, cvc: cvc)
+            }
+            .store(in: &cancellables)
     }
     
-    func didTap(_ cvc: CameraViewController) {
+    private func didSelect(_ sender: UITapGestureRecognizer, cvc: CameraViewController) {
+        let position = sender.location(in: cvc.arView)
+        
+        if let entity = cvc.arView.entity(at: position) as? ModelEntity {
+            cvc.generator.notificationOccurred(.success)
+            
+            if let controller = animationController {
+                DispatchQueue.main.async { [weak self] in
+                    self?.modelTranslator.send(nil)
+                    controller.stop()
+                    let animation = self?.defineAnimation(relativeTo: entity, isBack: true)
+                    self?.animationController = entity.playAnimation(animation!)
+                    self?.animationController = nil
+                }
+            } else {
+                let animation = defineAnimation(relativeTo: entity)
+                animationController = entity.playAnimation(animation)
+            }
+            self.modelTranslator.send(entity)
+            
+        } else {
+            self.modelTranslator.send(nil)
+        }
+        
+    }
+    
+    private func didTap(_ cvc: CameraViewController) {
+        cvc.generator.notificationOccurred(.success)
         let position = cvc.arView.center
         let results = cvc.arView.raycast(from: position, allowing: .estimatedPlane, alignment: .any)
         
@@ -71,11 +102,28 @@ final class CameraViewModel {
             animationController?.stop()
             animationController = nil
             
-        // 해당 위치에 entity가 없으면 새로운 anchor추가
+            // 해당 위치에 entity가 없으면 새로운 anchor추가
         } else if let first = results.first {
             let anchor = ARAnchor(name: "anchor", transform: first.worldTransform)
             cvc.arView.session.add(anchor: anchor)
         }
+    }
+    
+    func loadEntity(for anchor: ARAnchor, cvc: CameraViewController) {
+        let anchorEntity = AnchorEntity(anchor: anchor)
+        
+        guard let item = itemPickerViewModel.itemPick.value else { return }
+        
+        Entity.loadModelAsync(named: item.usdzURL)
+            .sink { _ in
+                //
+            } receiveValue: { entity in
+                entity.generateCollisionShapes(recursive: true)
+                anchorEntity.addChild(entity)
+                cvc.arView.scene.addAnchor(anchorEntity)
+                cvc.arView.installGestures(.all, for: entity)
+            }
+            .store(in: &cancellables)
     }
     
     func defineAnimation(relativeTo referenceEntity: Entity, isBack: Bool = false) -> AnimationResource {

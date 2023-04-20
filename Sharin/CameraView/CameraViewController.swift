@@ -13,42 +13,94 @@ import ARKit
 
 final class CameraViewController: UIViewController {
 
+    /// View Model
     let vm = CameraViewModel()
+    /// Parent Views
     let coachingOverlay = ARCoachingOverlayView()
-//    var arView: ARView!
     var arView: FocusARView!
+    /// SubViews
+    let selectButton = SharinButton(systemName: Option.find.systemName)
+    let memoryButton = SharinButton(systemName: Option.store.systemName)
+    let checkButton = SharinButton(systemName: "checkmark")
+    let cancelButton = SharinButton(systemName: "xmark")
+    let deleteButton = SharinButton(systemName: "trash")
+    let recognizer = UITapGestureRecognizer()
+    let alertLabel = UILabel()
+    let generator = UINotificationFeedbackGenerator()
+    /// cancellables (Combine)
     private var cancellables = Set<AnyCancellable>()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         arView = FocusARView(frame: .zero)
         arView.session.delegate = self
         view = arView
         
+        /// setting subviews
         setAttributesAndLayouts()
+        /// setting coachingOverlayView
         setupCoachingOverlay()
+        /// binding between View and Viewmodel.
         bind()
     }
     
-    let checkButton = SharinButton(systemName: "checkmark")
-    let cancelButton = SharinButton(systemName: "xmark")
-    let deleteButton = SharinButton(systemName: "trash")
-    let alertLabel = UILabel()
-    let generator = UINotificationFeedbackGenerator()
-    
     private func bind() {
-        
         vm.isActivate
-            .sink { [weak self] isEnabled in
-                self?.arView.focusEntity?.isEnabled = isEnabled
-                self?.checkButton.isHidden = !isEnabled
-                self?.checkButton.isEnabled = isEnabled
-                self?.cancelButton.isHidden = !isEnabled
-                self?.cancelButton.isEnabled = isEnabled
-                self?.deleteButton.isHidden = !isEnabled
-                self?.deleteButton.isEnabled = isEnabled
+            .sink { [weak self] in
+                self?.arView.focusEntity?.isEnabled = $0
+                self?.cancelButton.isEnabled = $0
+                self?.cancelButton.isHidden = !$0
+                self?.checkButton.isEnabled = $0
+                self?.checkButton.isHidden = !$0
             }
             .store(in: &cancellables)
+        
+        vm.modelTranslator
+            .map { $0 != nil }
+            .sink { [weak self] in
+                self?.deleteButton.isHidden = !$0
+                self?.deleteButton.isEnabled = $0
+            }
+            .store(in: &cancellables)
+        
+        selectButton.tapPublisher
+            .map { self }
+            .subscribe(vm.item)
+            .store(in: &cancellables)
+        
+        // TODO: - memory button
+        memoryButton.tapPublisher
+            .sink {
+                print("구현 예정")
+            }
+            .store(in: &cancellables)
+        
+        checkButton.tapPublisher
+            .map { self }
+            .subscribe(vm.check)
+            .store(in: &cancellables)
+        
+        cancelButton.tapPublisher
+            .subscribe(vm.cancel)
+            .store(in: &cancellables)
+        
+        recognizer.tapPublisher
+            .map { ($0, self) }
+            .subscribe(vm.select)
+            .store(in: &cancellables)
+        
+        //
+        //        deleteButton.tapPublisher
+        //            .sink(receiveValue: { [weak self]  in
+        //                if let model = self?.vm.modelTranslator.value {
+        //                    model.parent?.removeFromParent()
+        //                }
+        //
+        //                self?.deleteButton.isEnabled = false
+        //                self?.deleteButton.isHidden = true
+        //                self?.vm.modelTranslator.send(nil)
+        //            })
+        //            .store(in: &cancellables)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,9 +109,6 @@ final class CameraViewController: UIViewController {
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.vertical, .horizontal]
         arView.session.run(config)
-        
-        // place any object
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(didSelect))
         arView.addGestureRecognizer(recognizer)
 
     }
@@ -69,36 +118,6 @@ final class CameraViewController: UIViewController {
         cancellables.removeAll()
         super.viewWillDisappear(animated)
     }
-    
-    @objc private func didSelect(_ sender: UITapGestureRecognizer) {
-        let position = sender.location(in: arView)
-        
-        if let entity = arView.entity(at: position) as? ModelEntity {
-            generator.notificationOccurred(.success)
-            
-            if let controller = vm.animationController {
-                controller.stop()
-                let animation = vm.defineAnimation(relativeTo: entity, isBack: true)
-                vm.animationController = entity.playAnimation(animation)
-                vm.animationController = nil
-            } else {
-                let animation = vm.defineAnimation(relativeTo: entity)
-                vm.animationController = entity.playAnimation(animation)
-            }
-            
-            deleteButton.isEnabled = true
-            deleteButton.isHidden = false
-            vm.modelTranslator.send(entity)
-                
-        } else {
-            deleteButton.isEnabled = false
-            deleteButton.isHidden = true
-        }
-    
-    }
-    
-    
-    
 }
 
 extension CameraViewController {
@@ -108,37 +127,12 @@ extension CameraViewController {
         arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
     }
     
-    func loadEntity(for anchor: ARAnchor) {
-        let anchorEntity = AnchorEntity(anchor: anchor)
-        
-        vm.item
-            .compactMap { $0 }
-            .flatMap({ item -> LoadRequest<ModelEntity> in
-                return Entity.loadModelAsync(named: item.usdzURL)
-            })
-            .sink { completion in
-                switch completion {
-                case .failure(let error):
-                    print(error)
-                case .finished:
-                    break
-                }
-            } receiveValue: { [weak self] entity in
-                entity.generateCollisionShapes(recursive: true)
-                anchorEntity.addChild(entity)
-                self?.arView.scene.addAnchor(anchorEntity)
-                self?.arView.installGestures(.all, for: entity)
-            }
-            .store(in: &cancellables)
-    }
-    
     func setAttributesAndLayouts() {
         // UI
         let hStack = UIStackView(axis: .horizontal, alignment: .center, spacing: 24.0)
         hStack.tag = 1
-        let selectButton = SharinButton(systemName: Option.find.systemName)
+       
         selectButton.layer.name = Option.find.systemName
-        let memoryButton = SharinButton(systemName: Option.store.systemName)
         memoryButton.layer.name = Option.store.systemName
         
         checkButton.tag = 2
@@ -182,41 +176,5 @@ extension CameraViewController {
             deleteButton.leadingAnchor.constraint(equalTo: checkButton.trailingAnchor, constant: 40.0),
             deleteButton.bottomAnchor.constraint(equalTo: checkButton.bottomAnchor)
         ])
-        
-        // function
-        
-        selectButton.tapPublisher
-            .map { self }
-            .subscribe(vm.select)
-            .store(in: &cancellables)
-        
-        // TODO: - memory button
-        memoryButton.tapPublisher
-            .sink {
-                print("구현 예정")
-            }
-            .store(in: &cancellables)
-        
-        checkButton.tapPublisher
-            .map { self }
-            .subscribe(vm.check)
-            .store(in: &cancellables)
-        
-        cancelButton.tapPublisher
-            .subscribe(vm.cancelAction)
-            .store(in: &cancellables)
-        
-        deleteButton.tapPublisher
-            .sink(receiveValue: { [weak self]  in
-                if let model = self?.vm.modelTranslator.value {
-                    model.parent?.removeFromParent()
-                }
-                
-                self?.deleteButton.isEnabled = false
-                self?.deleteButton.isHidden = true
-                self?.vm.modelTranslator.send(nil)
-            })
-            .store(in: &cancellables)
-    
     }
 }
