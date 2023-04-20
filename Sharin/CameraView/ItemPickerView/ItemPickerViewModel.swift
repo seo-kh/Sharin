@@ -11,7 +11,7 @@ import UIKit
 final class ItemPickerViewModel: NSObject {
     let itemPick = CurrentValueSubject<Item?, Never>(nil)
     let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
-    let dismiss = PassthroughSubject<Void, Never>()
+    let dismiss = CurrentValueSubject<Void, Never>(())
     
     override init() {
         ipvc
