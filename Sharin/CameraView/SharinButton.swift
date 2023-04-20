@@ -32,8 +32,10 @@ final class SharinButton: UIButton {
         NSLayoutConstraint.activate([
             self.widthAnchor.constraint(equalToConstant: 32.0),
             self.heightAnchor.constraint(equalToConstant: 32.0),
-            self.imageView!.widthAnchor.constraint(equalTo: self.widthAnchor),
-            self.imageView!.heightAnchor.constraint(equalTo: self.heightAnchor),
+            self.imageView!.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.imageView!.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            self.imageView!.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -8.0),
+            self.imageView!.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -8.0),
         ])
     }
     
