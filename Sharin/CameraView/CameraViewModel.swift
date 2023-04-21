@@ -119,6 +119,7 @@ final class CameraViewModel {
                 //
             } receiveValue: { entity in
                 entity.generateCollisionShapes(recursive: true)
+                entity.name = item.id
                 anchorEntity.addChild(entity)
                 cvc.arView.scene.addAnchor(anchorEntity)
                 cvc.arView.installGestures(.all, for: entity)

@@ -13,6 +13,7 @@ import ARKit
 
 final class CameraViewController: UIViewController {
 
+    // MARK: - PROPERTIES
     /// View Model
     let vm = CameraViewModel()
     /// Parent Views
@@ -30,6 +31,7 @@ final class CameraViewController: UIViewController {
     /// cancellables (Combine)
     private var cancellables = Set<AnyCancellable>()
     
+    // MARK: - LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         arView = FocusARView(frame: .zero)
@@ -37,13 +39,31 @@ final class CameraViewController: UIViewController {
         view = arView
         
         /// setting subviews
-        setAttributesAndLayouts()
+        attribute()
+        layout()
         /// setting coachingOverlayView
         setupCoachingOverlay()
         /// binding between View and Viewmodel.
         bind()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.vertical, .horizontal]
+        arView.session.run(config)
+        arView.addGestureRecognizer(recognizer)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        arView.session.pause()
+        cancellables.removeAll()
+        super.viewWillDisappear(animated)
+    }
+    
+    // MARK: - BIND
     private func bind() {
         vm.isActivate
             .sink { [weak self] in
@@ -103,35 +123,18 @@ final class CameraViewController: UIViewController {
         //            .store(in: &cancellables)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let config = ARWorldTrackingConfiguration()
-        config.planeDetection = [.vertical, .horizontal]
-        arView.session.run(config)
-        arView.addGestureRecognizer(recognizer)
-
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        arView.session.pause()
-        cancellables.removeAll()
-        super.viewWillDisappear(animated)
-    }
 }
 
+// MARK: - SETTING
 extension CameraViewController {
     func resetTracking() {
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal, .vertical]
         arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
     }
-    
-    func setAttributesAndLayouts() {
+    func attribute() {
         // UI
-        let hStack = UIStackView(axis: .horizontal, alignment: .center, spacing: 24.0)
-        hStack.tag = 1
-       
+        
         selectButton.layer.name = Option.find.systemName
         memoryButton.layer.name = Option.store.systemName
         
@@ -153,8 +156,12 @@ extension CameraViewController {
         deleteButton.tag = 4
         deleteButton.isEnabled = false
         deleteButton.isHidden = true
-        
+    }
+    
+    func layout() {
         // view hierarchy
+        let hStack = UIStackView(axis: .horizontal, alignment: .center, spacing: 24.0)
+        hStack.tag = 1
         hStack.addArrangedSubview(selectButton)
         hStack.addArrangedSubview(memoryButton)
         arView.addSubview(hStack)
