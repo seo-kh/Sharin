@@ -79,19 +79,19 @@ final class CameraViewModel {
         if let entity = cvc.arView.entity(at: position) as? ModelEntity {
             cvc.generator.notificationOccurred(.success)
             
-            if let _ = animationController {
+            if let controller = animationController {
                 DispatchQueue.main.async { [weak self] in
                     self?.modelTranslator.send(nil)
-                    
+                    controller.stop()
                     let animation = self?.defineAnimation(relativeTo: entity, isBack: true)
                     self?.animationController = entity.playAnimation(animation!)
-                    self?.stopAndDiscardAnimation()
-                    
+                    self?.animationController = nil
                 }
             } else {
                 let animation = defineAnimation(relativeTo: entity)
                 animationController = entity.playAnimation(animation)
             }
+            
             self.modelTranslator.send(entity)
             let item = self.itemPickerViewModel.getItem(fromId: entity.name)
             self.itemPickerViewModel.itemPick.send(item)
@@ -167,10 +167,10 @@ final class CameraViewModel {
                 name: "up-and-down",
                 from: from,
                 to: to,
-                duration: 2.0,
-                timing: .easeOut,
+                duration: 0.5,
+                timing: .easeInOut,
                 bindTarget: .transform,
-                repeatMode: .none
+                repeatMode: .autoReverse
             )
         case true:
             // -y (아래방향) 0 cm까지 이동

@@ -12,8 +12,11 @@ final class ItemPickerViewModel: NSObject {
     let itemPick = CurrentValueSubject<Item?, Never>(nil)
     let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
     let dismiss = CurrentValueSubject<Void, Never>(())
+    @Published var items: [Item] = []
     
     override init() {
+        self.items = Item.dummy
+        
         ipvc
             .combineLatest(itemPick, dismiss)
             .sink { $0.0.dismiss(animated: true) }
@@ -23,7 +26,7 @@ final class ItemPickerViewModel: NSObject {
     private var cancellables = Set<AnyCancellable>()
     
     func getItem(fromId id: String) -> Item? {
-        return Item.dummy.first(where: {$0.id == id})
+        return items.first(where: {$0.id == id})
     }
 }
 
@@ -40,7 +43,7 @@ extension ItemPickerViewModel: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = Item.dummy[indexPath.item]
+        let item = items[indexPath.item]
         itemPick.send(item)
     }
     
@@ -51,7 +54,7 @@ extension ItemPickerViewModel: UICollectionViewDelegateFlowLayout {
 
 extension ItemPickerViewModel: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        Item.dummy.count
+        items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
