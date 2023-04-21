@@ -21,10 +21,9 @@ final class CameraViewModel {
     let item = PassthroughSubject<CameraViewController, Never>()
     let check = PassthroughSubject<CameraViewController, Never>()
     let select = PassthroughSubject<(UITapGestureRecognizer, CameraViewController), Never>()
+    let delete = PassthroughSubject<Void, Never>()
     
     init() {
-        
-        
         self.isActivate = itemPickerViewModel
             .itemPick
             .map { $0 != nil }
@@ -34,6 +33,7 @@ final class CameraViewModel {
             .sink { [weak self] in
                 self?.itemPickerViewModel.itemPick.send(nil)
                 self?.modelTranslator.send(nil)
+                self?.stopAndDiscardAnimation()
             }
             .store(in: &cancellables)
         
@@ -56,6 +56,21 @@ final class CameraViewModel {
                 self?.didSelect(gesture, cvc: cvc)
             }
             .store(in: &cancellables)
+        
+        delete
+            .sink { [weak self] in
+                if let model = self?.modelTranslator.value {
+                    model.parent?.removeFromParent()
+                }
+                self?.modelTranslator.send(nil)
+                self?.stopAndDiscardAnimation()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func stopAndDiscardAnimation() {
+        animationController?.stop()
+        animationController = nil
     }
     
     private func didSelect(_ sender: UITapGestureRecognizer, cvc: CameraViewController) {
@@ -67,10 +82,11 @@ final class CameraViewModel {
             if let controller = animationController {
                 DispatchQueue.main.async { [weak self] in
                     self?.modelTranslator.send(nil)
-                    controller.stop()
+                    
                     let animation = self?.defineAnimation(relativeTo: entity, isBack: true)
                     self?.animationController = entity.playAnimation(animation!)
-                    self?.animationController = nil
+                    self?.stopAndDiscardAnimation()
+                    
                 }
             } else {
                 let animation = defineAnimation(relativeTo: entity)
@@ -81,7 +97,6 @@ final class CameraViewModel {
             self.itemPickerViewModel.itemPick.send(item)
         } else {
             self.modelTranslator.send(nil)
-            self.itemPickerViewModel.itemPick.send(nil)
         }
         
     }
@@ -101,8 +116,7 @@ final class CameraViewModel {
                 cvc?.alertLabel.isHidden = true
             }
             
-            animationController?.stop()
-            animationController = nil
+            stopAndDiscardAnimation()
             
             // 해당 위치에 entity가 없으면 새로운 anchor추가
         } else if let first = results.first {

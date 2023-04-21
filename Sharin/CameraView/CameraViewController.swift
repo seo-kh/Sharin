@@ -109,18 +109,9 @@ final class CameraViewController: UIViewController {
             .subscribe(vm.select)
             .store(in: &cancellables)
         
-        //
-        //        deleteButton.tapPublisher
-        //            .sink(receiveValue: { [weak self]  in
-        //                if let model = self?.vm.modelTranslator.value {
-        //                    model.parent?.removeFromParent()
-        //                }
-        //
-        //                self?.deleteButton.isEnabled = false
-        //                self?.deleteButton.isHidden = true
-        //                self?.vm.modelTranslator.send(nil)
-        //            })
-        //            .store(in: &cancellables)
+        deleteButton.tapPublisher
+            .subscribe(vm.delete)
+            .store(in: &cancellables)
     }
     
 }
