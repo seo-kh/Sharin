@@ -77,9 +77,11 @@ final class CameraViewModel {
                 animationController = entity.playAnimation(animation)
             }
             self.modelTranslator.send(entity)
-            
+            let item = self.itemPickerViewModel.getItem(fromId: entity.name)
+            self.itemPickerViewModel.itemPick.send(item)
         } else {
             self.modelTranslator.send(nil)
+            self.itemPickerViewModel.itemPick.send(nil)
         }
         
     }

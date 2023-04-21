@@ -21,6 +21,10 @@ final class ItemPickerViewModel: NSObject {
     }
     
     private var cancellables = Set<AnyCancellable>()
+    
+    func getItem(fromId id: String) -> Item? {
+        return Item.dummy.first(where: {$0.id == id})
+    }
 }
 
 extension ItemPickerViewModel: UICollectionViewDelegateFlowLayout {
