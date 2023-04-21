@@ -19,12 +19,16 @@ final class ItemPickerViewContrller: UIViewController {
         return label
     }()
     
-    private lazy var itemLabel: UILabel = {
-        let label = UILabel()
-        label.text = "카테고리"
-        label.font = .preferredFont(forTextStyle: .title3)
-        label.textColor = .sharinSecondary
-        return label
+    private lazy var itemCategoryButton: UIButton = {
+        let button = UIButton(type: .roundedRect)
+        button.showsMenuAsPrimaryAction = true
+        button.setTitle("필터 선택", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
+        button.setTitleColor(.sharinPrimary, for: .normal)
+        button.backgroundColor = .sharinQuaternary.withAlphaComponent(0.2)
+        button.layer.cornerRadius = 8.0
+        
+        return button
     }()
     
     private lazy var seperator: UIView = {
@@ -33,7 +37,7 @@ final class ItemPickerViewContrller: UIViewController {
         return view
     }()
     
-    private lazy var collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
@@ -72,12 +76,22 @@ final class ItemPickerViewContrller: UIViewController {
             .subscribe(viewModel.dismiss)
             .store(in: &cancellables)
         
+        itemCategoryButton.menu = UIMenu(children: [
+            UIAction(title: "제목", handler: { _ in
+                viewModel.filterState = .title
+            }),
+
+            UIAction(title: "날짜", handler: { _ in
+                viewModel.filterState = .date
+            })
+        ])
+        
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
     }
     
     private func layout() {
-        [ titleLabel, itemLabel, seperator, collectionView, dismissButton ].forEach {
+        [ titleLabel, itemCategoryButton, seperator, collectionView, dismissButton ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -90,12 +104,15 @@ final class ItemPickerViewContrller: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            itemLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12.0),
-            itemLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
+            itemCategoryButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12.0),
+            itemCategoryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
+            itemCategoryButton.widthAnchor.constraint(equalTo: itemCategoryButton.titleLabel!.widthAnchor, multiplier: 1.1),
+            itemCategoryButton.heightAnchor.constraint(equalTo: itemCategoryButton.titleLabel!.heightAnchor, multiplier: 1.1),
+            
         ])
         
         NSLayoutConstraint.activate([
-            seperator.topAnchor.constraint(equalTo: itemLabel.bottomAnchor, constant: 12.0),
+            seperator.topAnchor.constraint(equalTo: itemCategoryButton.bottomAnchor, constant: 12.0),
             seperator.widthAnchor.constraint(equalTo: view.widthAnchor),
             seperator.heightAnchor.constraint(equalToConstant: 0.5)
         ])

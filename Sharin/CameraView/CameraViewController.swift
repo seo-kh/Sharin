@@ -163,7 +163,7 @@ extension CameraViewController {
         
         // layout
         NSLayoutConstraint.activate([
-            hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0),
+            hStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             hStack.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -12.0),
             checkButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20.0),
             checkButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

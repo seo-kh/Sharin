@@ -13,9 +13,31 @@ final class ItemPickerViewModel: NSObject {
     let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
     let dismiss = CurrentValueSubject<Void, Never>(())
     @Published var items: [Item] = []
+    @Published var filterState: FilterState = .title
+    
+    enum FilterState {
+        case title
+        case date
+    }
     
     override init() {
+        super.init()
+        
         self.items = Item.dummy
+        
+        $filterState
+            .combineLatest(ipvc)
+            .sink { [weak self] state, ipvc in
+                switch state {
+                case .title:
+                    self?.items.sort { $0.title < $1.title }
+                    ipvc.collectionView.reloadData()
+                case .date:
+                    self?.items.sort { $0.date > $1.date }
+                    ipvc.collectionView.reloadData()
+                }
+            }
+            .store(in: &cancellables)
         
         ipvc
             .combineLatest(itemPick, dismiss)
@@ -60,7 +82,7 @@ extension ItemPickerViewModel: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ItemCell.identifier, for: indexPath) as? ItemCell
         
-        let item = Item.dummy[indexPath.item]
+        let item = items[indexPath.item]
         cell?.setCell(from: item)
         return cell ?? UICollectionViewCell()
     }
