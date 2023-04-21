@@ -79,7 +79,7 @@ final class CameraViewModel {
         if let entity = cvc.arView.entity(at: position) as? ModelEntity {
             cvc.generator.notificationOccurred(.success)
             
-            if let controller = animationController {
+            if let _ = animationController {
                 DispatchQueue.main.async { [weak self] in
                     self?.modelTranslator.send(nil)
                     
@@ -123,6 +123,15 @@ final class CameraViewModel {
             let anchor = ARAnchor(name: "anchor", transform: first.worldTransform)
             cvc.arView.session.add(anchor: anchor)
         }
+    }
+    
+    func makeHighlightPalte(id: String) -> ModelEntity {
+        let mesh = MeshResource.generatePlane(width: 0.20, depth: 0.20, cornerRadius: 0.10)
+        let material = SimpleMaterial(color: .sharinQuaternary, isMetallic: false)
+        let entity = ModelEntity(mesh: mesh, materials: [material])
+        entity.name = id
+        entity.isEnabled = false
+        return entity
     }
     
     func loadEntity(for anchor: ARAnchor, cvc: CameraViewController) {
