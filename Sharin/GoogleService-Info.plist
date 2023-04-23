@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>18895355904-322t8orb9oclf5fjm2eq17ml6m09idej.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.18895355904-322t8orb9oclf5fjm2eq17ml6m09idej</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB8nHp8fWWccNeOJEVZtmw0lmEnbT4KhvM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>18895355904</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.skh.Sharin</string>
+	<key>PROJECT_ID</key>
+	<string>sharin-82cfe</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sharin-82cfe.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:18895355904:ios:7ca507892eee71ad2a18e5</string>
+</dict>
+</plist>
