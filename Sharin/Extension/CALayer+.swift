@@ -4,9 +4,7 @@
 //
 //  Created by james seo on 2023/03/19.
 //
-
 // reference : https://velog.io/@leejh3224/iOS-TabBar-shadow-%EC%BB%A4%EC%8A%A4%ED%84%B0%EB%A7%88%EC%9D%B4%EC%A7%95-trjugzee87
-
 import UIKit
 
 extension CALayer {
