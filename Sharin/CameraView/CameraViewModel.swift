@@ -12,6 +12,7 @@ import ARKit
 
 final class CameraViewModel {
     let itemStore = ItemStore()
+    let networkManager = NetworkManager()
     
     private var cancellables = Set<AnyCancellable>()
     let itemPickerViewModel = ItemPickerViewModel()
@@ -34,6 +35,12 @@ final class CameraViewModel {
         itemStore
             .items
             .assign(to: \.items, on: itemPickerViewModel)
+            .store(in: &cancellables)
+        
+        itemPickerViewModel
+            .itemPick
+            .compactMap { $0 }
+            .sink(receiveValue: { [weak self] in self?.networkManager.startDownloading(item: $0) })
             .store(in: &cancellables)
         
         cancel
@@ -142,21 +149,22 @@ final class CameraViewModel {
     }
     
     func loadEntity(for anchor: ARAnchor, cvc: CameraViewController) {
-//        let anchorEntity = AnchorEntity(world: anchor.transform)
-//
-//        guard let item = itemPickerViewModel.itemPick.value else { return }
-//
-//        Entity.loadModelAsync(named: item.usdz)
-//            .sink { _ in
-//                //
-//            } receiveValue: { entity in
-//                entity.generateCollisionShapes(recursive: false)
-//                entity.name = item.id
-//                anchorEntity.addChild(entity)
-//                cvc.arView.scene.addAnchor(anchorEntity)
-//                cvc.arView.installGestures(.all, for: entity)
-//            }
-//            .store(in: &cancellables)
+        let anchorEntity = AnchorEntity(world: anchor.transform)
+
+        guard let item = itemPickerViewModel.itemPick.value,
+              let url = networkManager.target else { return }
+
+        Entity.loadModelAsync(contentsOf: url)
+            .sink { _ in
+                //
+            } receiveValue: { entity in
+                entity.generateCollisionShapes(recursive: false)
+                entity.name = item.id
+                anchorEntity.addChild(entity)
+                cvc.arView.scene.addAnchor(anchorEntity)
+                cvc.arView.installGestures(.all, for: entity)
+            }
+            .store(in: &cancellables)
     }
     
     func defineAnimation(relativeTo referenceEntity: Entity, isBack: Bool = false) -> AnimationResource {

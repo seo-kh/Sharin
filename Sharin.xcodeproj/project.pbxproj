@@ -20,6 +20,7 @@
 		AA01F49929C60A5C00D0115A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F49829C60A5C00D0115A /* UIColor+.swift */; };
 		AA01FD9829F5AB7100560C4A /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9729F5AB7100560C4A /* ItemStore.swift */; };
 		AA01FD9A29F6433C00560C4A /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9929F6433C00560C4A /* UIImageView+.swift */; };
+		AA01FD9E29F6664800560C4A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9D29F6664800560C4A /* NetworkManager.swift */; };
 		AAA314E229D6A201007502E2 /* SharinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DB29D6A201007502E2 /* SharinButton.swift */; };
 		AAA314E329D6A201007502E2 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DC29D6A201007502E2 /* CameraViewModel.swift */; };
 		AAA314E429D6A201007502E2 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DE29D6A201007502E2 /* ItemCell.swift */; };
@@ -59,6 +60,7 @@
 		AA01F49829C60A5C00D0115A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		AA01FD9729F5AB7100560C4A /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		AA01FD9929F6433C00560C4A /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		AA01FD9D29F6664800560C4A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AAA314DB29D6A201007502E2 /* SharinButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharinButton.swift; sourceTree = "<group>"; };
 		AAA314DC29D6A201007502E2 /* CameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		AAA314DE29D6A201007502E2 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				AA01F47229C606E200D0115A /* SceneDelegate.swift */,
 				AA01F47429C606E200D0115A /* ContentViewController.swift */,
 				AA01FD9729F5AB7100560C4A /* ItemStore.swift */,
+				AA01FD9D29F6664800560C4A /* NetworkManager.swift */,
 				6F9CF97729F1662C0015BE16 /* Preview */,
 				AAA314EA29D6A23D007502E2 /* Model */,
 				AAA314DA29D6A201007502E2 /* CameraView */,
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA01FD9E29F6664800560C4A /* NetworkManager.swift in Sources */,
 				AAC3C7B729DC656700E7CE58 /* CameraViewController+ARSessionDelegate.swift in Sources */,
 				AA01F47529C606E200D0115A /* ContentViewController.swift in Sources */,
 				AAA314EE29D6A25C007502E2 /* UIButton+.swift in Sources */,
