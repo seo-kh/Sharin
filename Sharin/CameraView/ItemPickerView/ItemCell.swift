@@ -48,7 +48,7 @@ final class ItemCell: UICollectionViewCell {
     }
 
     func setCell(from item: Item) {
-        imageView.image = UIImage(named: item.usdz)
+        imageView.load(url: URL(string: item.img)!)
         nameLabel.text = item.name
     }
 
