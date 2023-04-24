@@ -26,7 +26,7 @@
 		AAA314E529D6A201007502E2 /* ItemPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DF29D6A201007502E2 /* ItemPickerViewController.swift */; };
 		AAA314E629D6A201007502E2 /* ItemPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314E029D6A201007502E2 /* ItemPickerViewModel.swift */; };
 		AAA314E729D6A201007502E2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314E129D6A201007502E2 /* CameraViewController.swift */; };
-		AAA314EC29D6A23D007502E2 /* 3DItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EB29D6A23D007502E2 /* 3DItem.swift */; };
+		AAA314EC29D6A23D007502E2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EB29D6A23D007502E2 /* Item.swift */; };
 		AAA314EE29D6A25C007502E2 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314ED29D6A25C007502E2 /* UIButton+.swift */; };
 		AAA314F029D6A2F8007502E2 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EF29D6A2F8007502E2 /* CALayer+.swift */; };
 		AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7288129C61CC2007FD4EC /* UITabBar+.swift */; };
@@ -65,7 +65,7 @@
 		AAA314DF29D6A201007502E2 /* ItemPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemPickerViewController.swift; sourceTree = "<group>"; };
 		AAA314E029D6A201007502E2 /* ItemPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemPickerViewModel.swift; sourceTree = "<group>"; };
 		AAA314E129D6A201007502E2 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		AAA314EB29D6A23D007502E2 /* 3DItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DItem.swift; sourceTree = "<group>"; };
+		AAA314EB29D6A23D007502E2 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AAA314ED29D6A25C007502E2 /* UIButton+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		AAA314EF29D6A2F8007502E2 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		AAA7288129C61CC2007FD4EC /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		AAA314EA29D6A23D007502E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AAA314EB29D6A23D007502E2 /* 3DItem.swift */,
+				AAA314EB29D6A23D007502E2 /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 				AAC3C7B329DC62CC00E7CE58 /* CameraViewController+Option.swift in Sources */,
 				AA01FD9A29F6433C00560C4A /* UIImageView+.swift in Sources */,
 				AAA314E529D6A201007502E2 /* ItemPickerViewController.swift in Sources */,
-				AAA314EC29D6A23D007502E2 /* 3DItem.swift in Sources */,
+				AAA314EC29D6A23D007502E2 /* Item.swift in Sources */,
 				AAC3C7AE29DC285A00E7CE58 /* UIStackView+.swift in Sources */,
 				AAC3C7B529DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift in Sources */,
 				AA01F47129C606E200D0115A /* AppDelegate.swift in Sources */,
