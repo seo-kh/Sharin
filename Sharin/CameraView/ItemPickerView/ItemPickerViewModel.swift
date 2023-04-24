@@ -13,12 +13,6 @@ final class ItemPickerViewModel: NSObject {
     let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
     let dismiss = CurrentValueSubject<Void, Never>(())
     @Published var items: [Item] = []
-    @Published var filterState: FilterState = .title
-    
-    enum FilterState {
-        case title
-        case date
-    }
     
     override init() {
         super.init()

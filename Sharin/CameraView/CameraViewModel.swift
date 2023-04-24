@@ -142,15 +142,15 @@ final class CameraViewModel {
     }
     
     func loadEntity(for anchor: ARAnchor, cvc: CameraViewController) {
-        let anchorEntity = AnchorEntity(world: anchor.transform)
-        
-        guard let item = itemPickerViewModel.itemPick.value else { return }
-        
+//        let anchorEntity = AnchorEntity(world: anchor.transform)
+//
+//        guard let item = itemPickerViewModel.itemPick.value else { return }
+//
 //        Entity.loadModelAsync(named: item.usdz)
 //            .sink { _ in
 //                //
 //            } receiveValue: { entity in
-//                entity.generateCollisionShapes(recursive: true)
+//                entity.generateCollisionShapes(recursive: false)
 //                entity.name = item.id
 //                anchorEntity.addChild(entity)
 //                cvc.arView.scene.addAnchor(anchorEntity)
