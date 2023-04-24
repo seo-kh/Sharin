@@ -23,21 +23,21 @@ final class ItemPickerViewModel: NSObject {
     override init() {
         super.init()
         
-        self.items = Item.dummy
+//        self.items = Item.dummy
         
-        $filterState
-            .combineLatest(ipvc)
-            .sink { [weak self] state, ipvc in
-                switch state {
-                case .title:
-                    self?.items.sort { $0.title < $1.title }
-                    ipvc.collectionView.reloadData()
-                case .date:
-                    self?.items.sort { $0.date > $1.date }
-                    ipvc.collectionView.reloadData()
-                }
-            }
-            .store(in: &cancellables)
+//        filterState
+//            .combineLatest(ipvc)
+//            .sink { [weak self] state, ipvc in
+//                switch state {
+//                case .title:
+//                    self?.items.sort { $0.title < $1.title }
+//                    ipvc.collectionView.reloadData()
+//                case .date:
+//                    self?.items.sort { $0.date > $1.date }
+//                    ipvc.collectionView.reloadData()
+//                }
+//            }
+//            .store(in: &cancellables)
         
         ipvc
             .combineLatest(itemPick, dismiss)

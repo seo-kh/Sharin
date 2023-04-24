@@ -36,11 +36,11 @@ final class ItemCell: UICollectionViewCell {
     
     func setCell(from item: Item) {
         if let view = contentView.subviews.first as? UIImageView {
-            view.image = UIImage(named: item.usdzURL)
+            view.image = UIImage(named: item.usdz)
             view.contentMode = .scaleAspectFit
             
             let label = UILabel()
-            label.text = item.title
+            label.text = item.name
             label.font = .preferredFont(forTextStyle: .headline)
             label.translatesAutoresizingMaskIntoConstraints = false
             label.numberOfLines = 1

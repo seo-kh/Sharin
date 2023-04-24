@@ -11,6 +11,8 @@ import RealityKit
 import ARKit
 
 final class CameraViewModel {
+    let itemStore = ItemStore()
+    
     private var cancellables = Set<AnyCancellable>()
     let itemPickerViewModel = ItemPickerViewModel()
     let modelTranslator = CurrentValueSubject<ModelEntity?, Never>(nil)
@@ -28,6 +30,11 @@ final class CameraViewModel {
             .itemPick
             .map { $0 != nil }
             .eraseToAnyPublisher()
+        
+        itemStore
+            .items
+            .assign(to: \.items, on: itemPickerViewModel)
+            .store(in: &cancellables)
         
         cancel
             .sink { [weak self] in
@@ -135,21 +142,21 @@ final class CameraViewModel {
     }
     
     func loadEntity(for anchor: ARAnchor, cvc: CameraViewController) {
-        let anchorEntity = AnchorEntity(anchor: anchor)
+        let anchorEntity = AnchorEntity(world: anchor.transform)
         
         guard let item = itemPickerViewModel.itemPick.value else { return }
         
-        Entity.loadModelAsync(named: item.usdzURL)
-            .sink { _ in
-                //
-            } receiveValue: { entity in
-                entity.generateCollisionShapes(recursive: true)
-                entity.name = item.id
-                anchorEntity.addChild(entity)
-                cvc.arView.scene.addAnchor(anchorEntity)
-                cvc.arView.installGestures(.all, for: entity)
-            }
-            .store(in: &cancellables)
+//        Entity.loadModelAsync(named: item.usdz)
+//            .sink { _ in
+//                //
+//            } receiveValue: { entity in
+//                entity.generateCollisionShapes(recursive: true)
+//                entity.name = item.id
+//                anchorEntity.addChild(entity)
+//                cvc.arView.scene.addAnchor(anchorEntity)
+//                cvc.arView.installGestures(.all, for: entity)
+//            }
+//            .store(in: &cancellables)
     }
     
     func defineAnimation(relativeTo referenceEntity: Entity, isBack: Bool = false) -> AnimationResource {
