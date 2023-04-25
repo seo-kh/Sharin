@@ -15,6 +15,10 @@ class ItemStore {
     let items = CurrentValueSubject<[Item], Never>([])
     
     init() {
+        fetchAllItems()
+    }
+    
+    func fetchAllItems() {
         ref.getDocuments { snapshot, _ in
             if let snapshot = snapshot {
                 let docu = snapshot.documents

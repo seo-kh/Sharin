@@ -13,10 +13,6 @@
 		AA01F47529C606E200D0115A /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F47429C606E200D0115A /* ContentViewController.swift */; };
 		AA01F47A29C606E400D0115A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47929C606E400D0115A /* Assets.xcassets */; };
 		AA01F47D29C606E400D0115A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */; };
-		AA01F48E29C6089600D0115A /* tv_retro.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48529C6089200D0115A /* tv_retro.usdz */; };
-		AA01F48F29C6089600D0115A /* wateringcan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48629C6089200D0115A /* wateringcan.usdz */; };
-		AA01F49029C6089600D0115A /* flower_tulip.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48729C6089300D0115A /* flower_tulip.usdz */; };
-		AA01F49229C6089600D0115A /* gramophone.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48929C6089400D0115A /* gramophone.usdz */; };
 		AA01F49929C60A5C00D0115A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F49829C60A5C00D0115A /* UIColor+.swift */; };
 		AA01FD9829F5AB7100560C4A /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9729F5AB7100560C4A /* ItemStore.swift */; };
 		AA01FD9A29F6433C00560C4A /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9929F6433C00560C4A /* UIImageView+.swift */; };
@@ -53,10 +49,6 @@
 		AA01F47929C606E400D0115A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA01F47C29C606E400D0115A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA01F47E29C606E400D0115A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA01F48529C6089200D0115A /* tv_retro.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = tv_retro.usdz; sourceTree = "<group>"; };
-		AA01F48629C6089200D0115A /* wateringcan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wateringcan.usdz; sourceTree = "<group>"; };
-		AA01F48729C6089300D0115A /* flower_tulip.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = flower_tulip.usdz; sourceTree = "<group>"; };
-		AA01F48929C6089400D0115A /* gramophone.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = gramophone.usdz; sourceTree = "<group>"; };
 		AA01F49829C60A5C00D0115A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		AA01FD9729F5AB7100560C4A /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
 		AA01FD9929F6433C00560C4A /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
@@ -133,22 +125,10 @@
 				AAA314DA29D6A201007502E2 /* CameraView */,
 				AA01F49729C60A4D00D0115A /* Extension */,
 				AA01F47929C606E400D0115A /* Assets.xcassets */,
-				AA01F48429C6088000D0115A /* contents */,
 				AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */,
 				AA01F47E29C606E400D0115A /* Info.plist */,
 			);
 			path = Sharin;
-			sourceTree = "<group>";
-		};
-		AA01F48429C6088000D0115A /* contents */ = {
-			isa = PBXGroup;
-			children = (
-				AA01F48729C6089300D0115A /* flower_tulip.usdz */,
-				AA01F48929C6089400D0115A /* gramophone.usdz */,
-				AA01F48529C6089200D0115A /* tv_retro.usdz */,
-				AA01F48629C6089200D0115A /* wateringcan.usdz */,
-			);
-			path = contents;
 			sourceTree = "<group>";
 		};
 		AA01F49729C60A4D00D0115A /* Extension */ = {
@@ -269,10 +249,6 @@
 			files = (
 				AA01F47D29C606E400D0115A /* LaunchScreen.storyboard in Resources */,
 				AA01F47A29C606E400D0115A /* Assets.xcassets in Resources */,
-				AA01F49229C6089600D0115A /* gramophone.usdz in Resources */,
-				AA01F48E29C6089600D0115A /* tv_retro.usdz in Resources */,
-				AA01F49029C6089600D0115A /* flower_tulip.usdz in Resources */,
-				AA01F48F29C6089600D0115A /* wateringcan.usdz in Resources */,
 				AAC3C1C729F59CA80083EE12 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

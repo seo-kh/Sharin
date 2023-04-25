@@ -25,13 +25,25 @@ final class ItemPickerViewContrller: UIViewController {
         return view
     }()
     
+    lazy var refreshControl: UIRefreshControl = UIRefreshControl()
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(ItemCell.self, forCellWithReuseIdentifier: ItemCell.identifier)
+        collectionView.refreshControl = self.refreshControl
         return collectionView
+    }()
+    
+    private lazy var noticeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "당겨서 새로고침 🔃"
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.isHidden = true
+        return label
     }()
     
     private lazy var dismissButton: UIButton = {
@@ -60,16 +72,27 @@ final class ItemPickerViewContrller: UIViewController {
     func bind(to viewModel: ItemPickerViewModel) {
         viewModel.ipvc.send(self)
         
+        viewModel.$items
+            .map(\.isEmpty)
+            .map { !$0 }
+            .assign(to: \.noticeLabel.isHidden, on: self)
+            .store(in: &cancellables)
+
         dismissButton.tapPublisher
             .subscribe(viewModel.dismiss)
             .store(in: &cancellables)
         
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
+        
+        refreshControl.controlEventPublisher(for: .valueChanged)
+            .subscribe(viewModel.refresh)
+            .store(in: &cancellables)
+        
     }
     
     private func layout() {
-        [ titleLabel, seperator, collectionView, dismissButton ].forEach {
+        [ titleLabel, seperator, collectionView, dismissButton, noticeLabel ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -101,6 +124,11 @@ final class ItemPickerViewContrller: UIViewController {
             dismissButton.heightAnchor.constraint(equalToConstant: 30.0),
             dismissButton.imageView!.widthAnchor.constraint(equalTo: dismissButton.widthAnchor, multiplier: 1.0),
             dismissButton.imageView!.heightAnchor.constraint(equalTo: dismissButton.heightAnchor, multiplier: 1.0),
+        ])
+        
+        NSLayoutConstraint.activate([
+            noticeLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            noticeLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
         ])
         
     }

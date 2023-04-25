@@ -12,6 +12,7 @@ final class ItemPickerViewModel: NSObject {
     let itemPick = CurrentValueSubject<Item?, Never>(nil)
     let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
     let dismiss = CurrentValueSubject<Void, Never>(())
+    let refresh = PassthroughSubject<Void, Never>()
     @Published var items: [Item] = []
     
     override init() {
@@ -21,6 +22,17 @@ final class ItemPickerViewModel: NSObject {
             .combineLatest(itemPick, dismiss)
             .sink { $0.0.dismiss(animated: true) }
             .store(in: &cancellables)
+        
+        ipvc
+            .combineLatest($items)
+            .sink { ipvc, items in
+                if !items.isEmpty {
+                    ipvc.refreshControl.endRefreshing()
+                    ipvc.collectionView.reloadData()
+                }
+            }
+            .store(in: &cancellables)
+            
     }
     
     private var cancellables = Set<AnyCancellable>()

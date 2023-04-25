@@ -25,11 +25,16 @@ final class CameraViewModel {
     let check = PassthroughSubject<CameraViewController, Never>()
     let select = PassthroughSubject<(UITapGestureRecognizer, CameraViewController), Never>()
     let delete = PassthroughSubject<Void, Never>()
+    let isLoading: AnyPublisher<Bool, Never>
     
     init() {
         self.isActivate = itemPickerViewModel
             .itemPick
             .map { $0 != nil }
+            .eraseToAnyPublisher()
+        
+        self.isLoading = networkManager
+            .isLoading
             .eraseToAnyPublisher()
         
         itemStore
@@ -40,7 +45,17 @@ final class CameraViewModel {
         itemPickerViewModel
             .itemPick
             .compactMap { $0 }
-            .sink(receiveValue: { [weak self] in self?.networkManager.startDownloading(item: $0) })
+            .sink(receiveValue: {
+                [weak self] in
+                self?.networkManager.startDownloading(item: $0)
+            })
+            .store(in: &cancellables)
+        
+        itemPickerViewModel
+            .refresh
+            .sink { [weak self] in
+                self?.itemStore.fetchAllItems()
+            }
             .store(in: &cancellables)
         
         cancel

@@ -28,6 +28,7 @@ final class CameraViewController: UIViewController {
     let recognizer = UITapGestureRecognizer()
     let alertLabel = UILabel()
     let generator = UINotificationFeedbackGenerator()
+    let activityView = UIActivityIndicatorView()
     /// cancellables (Combine)
     private var cancellables = Set<AnyCancellable>()
     
@@ -66,12 +67,19 @@ final class CameraViewController: UIViewController {
     // MARK: - BIND
     private func bind() {
         vm.isActivate
+            .combineLatest(vm.isLoading)
             .sink { [weak self] in
-                self?.arView.focusEntity?.isEnabled = $0
-                self?.cancelButton.isEnabled = $0
-                self?.cancelButton.isHidden = !$0
-                self?.checkButton.isEnabled = $0
-                self?.checkButton.isHidden = !$0
+                self?.arView.focusEntity?.isEnabled = $0 && !$1
+                self?.cancelButton.isEnabled = $0 && !$1
+                self?.cancelButton.isHidden = !($0 && !$1)
+                self?.checkButton.isEnabled = $0 && !$1
+                self?.checkButton.isHidden = !($0 && !$1)
+                
+                if $1 {
+                    self?.activityView.startAnimating()
+                } else {
+                    self?.activityView.stopAnimating()
+                }
             }
             .store(in: &cancellables)
         
@@ -147,6 +155,11 @@ extension CameraViewController {
         deleteButton.tag = 4
         deleteButton.isEnabled = false
         deleteButton.isHidden = true
+        
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        activityView.backgroundColor = .sharinPrimary
+        activityView.layer.cornerRadius = 12.0
+        activityView.transform = .init(scaleX: 2.0, y: 2.0)
     }
     
     func layout() {
@@ -160,6 +173,7 @@ extension CameraViewController {
         arView.addSubview(alertLabel)
         arView.addSubview(cancelButton)
         arView.addSubview(deleteButton)
+        arView.addSubview(activityView)
         
         // layout
         NSLayoutConstraint.activate([
@@ -172,7 +186,11 @@ extension CameraViewController {
             cancelButton.topAnchor.constraint(equalTo: hStack.topAnchor),
             cancelButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 12.0),
             deleteButton.leadingAnchor.constraint(equalTo: checkButton.trailingAnchor, constant: 40.0),
-            deleteButton.bottomAnchor.constraint(equalTo: checkButton.bottomAnchor)
+            deleteButton.bottomAnchor.constraint(equalTo: checkButton.bottomAnchor),
+            activityView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityView.widthAnchor.constraint(equalToConstant: 40.0),
+            activityView.heightAnchor.constraint(equalToConstant: 40.0),
         ])
     }
 }
