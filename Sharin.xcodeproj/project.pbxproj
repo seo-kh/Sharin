@@ -13,18 +13,17 @@
 		AA01F47529C606E200D0115A /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F47429C606E200D0115A /* ContentViewController.swift */; };
 		AA01F47A29C606E400D0115A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47929C606E400D0115A /* Assets.xcassets */; };
 		AA01F47D29C606E400D0115A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */; };
-		AA01F48E29C6089600D0115A /* tv_retro.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48529C6089200D0115A /* tv_retro.usdz */; };
-		AA01F48F29C6089600D0115A /* wateringcan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48629C6089200D0115A /* wateringcan.usdz */; };
-		AA01F49029C6089600D0115A /* flower_tulip.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48729C6089300D0115A /* flower_tulip.usdz */; };
-		AA01F49229C6089600D0115A /* gramophone.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AA01F48929C6089400D0115A /* gramophone.usdz */; };
 		AA01F49929C60A5C00D0115A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01F49829C60A5C00D0115A /* UIColor+.swift */; };
+		AA01FD9829F5AB7100560C4A /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9729F5AB7100560C4A /* ItemStore.swift */; };
+		AA01FD9A29F6433C00560C4A /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9929F6433C00560C4A /* UIImageView+.swift */; };
+		AA01FD9E29F6664800560C4A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01FD9D29F6664800560C4A /* NetworkManager.swift */; };
 		AAA314E229D6A201007502E2 /* SharinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DB29D6A201007502E2 /* SharinButton.swift */; };
 		AAA314E329D6A201007502E2 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DC29D6A201007502E2 /* CameraViewModel.swift */; };
 		AAA314E429D6A201007502E2 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DE29D6A201007502E2 /* ItemCell.swift */; };
 		AAA314E529D6A201007502E2 /* ItemPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314DF29D6A201007502E2 /* ItemPickerViewController.swift */; };
 		AAA314E629D6A201007502E2 /* ItemPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314E029D6A201007502E2 /* ItemPickerViewModel.swift */; };
 		AAA314E729D6A201007502E2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314E129D6A201007502E2 /* CameraViewController.swift */; };
-		AAA314EC29D6A23D007502E2 /* 3DItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EB29D6A23D007502E2 /* 3DItem.swift */; };
+		AAA314EC29D6A23D007502E2 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EB29D6A23D007502E2 /* Item.swift */; };
 		AAA314EE29D6A25C007502E2 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314ED29D6A25C007502E2 /* UIButton+.swift */; };
 		AAA314F029D6A2F8007502E2 /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA314EF29D6A2F8007502E2 /* CALayer+.swift */; };
 		AAA7288229C61CC2007FD4EC /* UITabBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7288129C61CC2007FD4EC /* UITabBar+.swift */; };
@@ -50,18 +49,17 @@
 		AA01F47929C606E400D0115A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA01F47C29C606E400D0115A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA01F47E29C606E400D0115A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA01F48529C6089200D0115A /* tv_retro.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = tv_retro.usdz; sourceTree = "<group>"; };
-		AA01F48629C6089200D0115A /* wateringcan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wateringcan.usdz; sourceTree = "<group>"; };
-		AA01F48729C6089300D0115A /* flower_tulip.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = flower_tulip.usdz; sourceTree = "<group>"; };
-		AA01F48929C6089400D0115A /* gramophone.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = gramophone.usdz; sourceTree = "<group>"; };
 		AA01F49829C60A5C00D0115A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		AA01FD9729F5AB7100560C4A /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
+		AA01FD9929F6433C00560C4A /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		AA01FD9D29F6664800560C4A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AAA314DB29D6A201007502E2 /* SharinButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharinButton.swift; sourceTree = "<group>"; };
 		AAA314DC29D6A201007502E2 /* CameraViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		AAA314DE29D6A201007502E2 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		AAA314DF29D6A201007502E2 /* ItemPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemPickerViewController.swift; sourceTree = "<group>"; };
 		AAA314E029D6A201007502E2 /* ItemPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemPickerViewModel.swift; sourceTree = "<group>"; };
 		AAA314E129D6A201007502E2 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
-		AAA314EB29D6A23D007502E2 /* 3DItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = 3DItem.swift; sourceTree = "<group>"; };
+		AAA314EB29D6A23D007502E2 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		AAA314ED29D6A25C007502E2 /* UIButton+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		AAA314EF29D6A2F8007502E2 /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		AAA7288129C61CC2007FD4EC /* UITabBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBar+.swift"; sourceTree = "<group>"; };
@@ -120,27 +118,17 @@
 				AA01F47029C606E200D0115A /* AppDelegate.swift */,
 				AA01F47229C606E200D0115A /* SceneDelegate.swift */,
 				AA01F47429C606E200D0115A /* ContentViewController.swift */,
+				AA01FD9729F5AB7100560C4A /* ItemStore.swift */,
+				AA01FD9D29F6664800560C4A /* NetworkManager.swift */,
 				6F9CF97729F1662C0015BE16 /* Preview */,
 				AAA314EA29D6A23D007502E2 /* Model */,
 				AAA314DA29D6A201007502E2 /* CameraView */,
 				AA01F49729C60A4D00D0115A /* Extension */,
 				AA01F47929C606E400D0115A /* Assets.xcassets */,
-				AA01F48429C6088000D0115A /* contents */,
 				AA01F47B29C606E400D0115A /* LaunchScreen.storyboard */,
 				AA01F47E29C606E400D0115A /* Info.plist */,
 			);
 			path = Sharin;
-			sourceTree = "<group>";
-		};
-		AA01F48429C6088000D0115A /* contents */ = {
-			isa = PBXGroup;
-			children = (
-				AA01F48729C6089300D0115A /* flower_tulip.usdz */,
-				AA01F48929C6089400D0115A /* gramophone.usdz */,
-				AA01F48529C6089200D0115A /* tv_retro.usdz */,
-				AA01F48629C6089200D0115A /* wateringcan.usdz */,
-			);
-			path = contents;
 			sourceTree = "<group>";
 		};
 		AA01F49729C60A4D00D0115A /* Extension */ = {
@@ -154,6 +142,7 @@
 				AAC3C7B229DC62CC00E7CE58 /* CameraViewController+Option.swift */,
 				AAC3C7B429DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift */,
 				AAC3C7B629DC656700E7CE58 /* CameraViewController+ARSessionDelegate.swift */,
+				AA01FD9929F6433C00560C4A /* UIImageView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -183,7 +172,7 @@
 		AAA314EA29D6A23D007502E2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AAA314EB29D6A23D007502E2 /* 3DItem.swift */,
+				AAA314EB29D6A23D007502E2 /* Item.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -260,10 +249,6 @@
 			files = (
 				AA01F47D29C606E400D0115A /* LaunchScreen.storyboard in Resources */,
 				AA01F47A29C606E400D0115A /* Assets.xcassets in Resources */,
-				AA01F49229C6089600D0115A /* gramophone.usdz in Resources */,
-				AA01F48E29C6089600D0115A /* tv_retro.usdz in Resources */,
-				AA01F49029C6089600D0115A /* flower_tulip.usdz in Resources */,
-				AA01F48F29C6089600D0115A /* wateringcan.usdz in Resources */,
 				AAC3C1C729F59CA80083EE12 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -275,19 +260,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA01FD9E29F6664800560C4A /* NetworkManager.swift in Sources */,
 				AAC3C7B729DC656700E7CE58 /* CameraViewController+ARSessionDelegate.swift in Sources */,
 				AA01F47529C606E200D0115A /* ContentViewController.swift in Sources */,
 				AAA314EE29D6A25C007502E2 /* UIButton+.swift in Sources */,
 				AAA314E429D6A201007502E2 /* ItemCell.swift in Sources */,
 				AA01F49929C60A5C00D0115A /* UIColor+.swift in Sources */,
+				AA01FD9829F5AB7100560C4A /* ItemStore.swift in Sources */,
 				6F9CF97929F166420015BE16 /* SharinButtonView.swift in Sources */,
 				AAA314E229D6A201007502E2 /* SharinButton.swift in Sources */,
 				AAA314E729D6A201007502E2 /* CameraViewController.swift in Sources */,
 				AAA314E629D6A201007502E2 /* ItemPickerViewModel.swift in Sources */,
 				AAA314F029D6A2F8007502E2 /* CALayer+.swift in Sources */,
 				AAC3C7B329DC62CC00E7CE58 /* CameraViewController+Option.swift in Sources */,
+				AA01FD9A29F6433C00560C4A /* UIImageView+.swift in Sources */,
 				AAA314E529D6A201007502E2 /* ItemPickerViewController.swift in Sources */,
-				AAA314EC29D6A23D007502E2 /* 3DItem.swift in Sources */,
+				AAA314EC29D6A23D007502E2 /* Item.swift in Sources */,
 				AAC3C7AE29DC285A00E7CE58 /* UIStackView+.swift in Sources */,
 				AAC3C7B529DC641A00E7CE58 /* CameraViewController+ARCoachingOverlayViewDelegate.swift in Sources */,
 				AA01F47129C606E200D0115A /* AppDelegate.swift in Sources */,

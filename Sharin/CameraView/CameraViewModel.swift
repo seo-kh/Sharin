@@ -11,6 +11,9 @@ import RealityKit
 import ARKit
 
 final class CameraViewModel {
+    let itemStore = ItemStore()
+    let networkManager = NetworkManager()
+    
     private var cancellables = Set<AnyCancellable>()
     let itemPickerViewModel = ItemPickerViewModel()
     let modelTranslator = CurrentValueSubject<ModelEntity?, Never>(nil)
@@ -22,12 +25,38 @@ final class CameraViewModel {
     let check = PassthroughSubject<CameraViewController, Never>()
     let select = PassthroughSubject<(UITapGestureRecognizer, CameraViewController), Never>()
     let delete = PassthroughSubject<Void, Never>()
+    let isLoading: AnyPublisher<Bool, Never>
     
     init() {
         self.isActivate = itemPickerViewModel
             .itemPick
             .map { $0 != nil }
             .eraseToAnyPublisher()
+        
+        self.isLoading = networkManager
+            .isLoading
+            .eraseToAnyPublisher()
+        
+        itemStore
+            .items
+            .assign(to: \.items, on: itemPickerViewModel)
+            .store(in: &cancellables)
+        
+        itemPickerViewModel
+            .itemPick
+            .compactMap { $0 }
+            .sink(receiveValue: {
+                [weak self] in
+                self?.networkManager.startDownloading(item: $0)
+            })
+            .store(in: &cancellables)
+        
+        itemPickerViewModel
+            .refresh
+            .sink { [weak self] in
+                self?.itemStore.fetchAllItems()
+            }
+            .store(in: &cancellables)
         
         cancel
             .sink { [weak self] in
@@ -135,15 +164,16 @@ final class CameraViewModel {
     }
     
     func loadEntity(for anchor: ARAnchor, cvc: CameraViewController) {
-        let anchorEntity = AnchorEntity(anchor: anchor)
-        
-        guard let item = itemPickerViewModel.itemPick.value else { return }
-        
-        Entity.loadModelAsync(named: item.usdzURL)
+        let anchorEntity = AnchorEntity(world: anchor.transform)
+
+        guard let item = itemPickerViewModel.itemPick.value,
+              let url = networkManager.target else { return }
+
+        Entity.loadModelAsync(contentsOf: url)
             .sink { _ in
                 //
             } receiveValue: { entity in
-                entity.generateCollisionShapes(recursive: true)
+                entity.generateCollisionShapes(recursive: false)
                 entity.name = item.id
                 anchorEntity.addChild(entity)
                 cvc.arView.scene.addAnchor(anchorEntity)

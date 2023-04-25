@@ -12,37 +12,27 @@ final class ItemPickerViewModel: NSObject {
     let itemPick = CurrentValueSubject<Item?, Never>(nil)
     let ipvc = PassthroughSubject<ItemPickerViewContrller, Never>()
     let dismiss = CurrentValueSubject<Void, Never>(())
+    let refresh = PassthroughSubject<Void, Never>()
     @Published var items: [Item] = []
-    @Published var filterState: FilterState = .title
-    
-    enum FilterState {
-        case title
-        case date
-    }
     
     override init() {
         super.init()
-        
-        self.items = Item.dummy
-        
-        $filterState
-            .combineLatest(ipvc)
-            .sink { [weak self] state, ipvc in
-                switch state {
-                case .title:
-                    self?.items.sort { $0.title < $1.title }
-                    ipvc.collectionView.reloadData()
-                case .date:
-                    self?.items.sort { $0.date > $1.date }
-                    ipvc.collectionView.reloadData()
-                }
-            }
-            .store(in: &cancellables)
         
         ipvc
             .combineLatest(itemPick, dismiss)
             .sink { $0.0.dismiss(animated: true) }
             .store(in: &cancellables)
+        
+        ipvc
+            .combineLatest($items)
+            .sink { ipvc, items in
+                if !items.isEmpty {
+                    ipvc.refreshControl.endRefreshing()
+                    ipvc.collectionView.reloadData()
+                }
+            }
+            .store(in: &cancellables)
+            
     }
     
     private var cancellables = Set<AnyCancellable>()

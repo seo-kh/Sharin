@@ -19,23 +19,13 @@ final class ItemPickerViewContrller: UIViewController {
         return label
     }()
     
-    private lazy var itemCategoryButton: UIButton = {
-        let button = UIButton(type: .roundedRect)
-        button.showsMenuAsPrimaryAction = true
-        button.setTitle("필터 선택", for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .title2)
-        button.setTitleColor(.sharinPrimary, for: .normal)
-        button.backgroundColor = .sharinQuaternary.withAlphaComponent(0.2)
-        button.layer.cornerRadius = 8.0
-        
-        return button
-    }()
-    
     private lazy var seperator: UIView = {
         let view = UIView()
         view.backgroundColor = .gray
         return view
     }()
+    
+    lazy var refreshControl: UIRefreshControl = UIRefreshControl()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -43,7 +33,17 @@ final class ItemPickerViewContrller: UIViewController {
         
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(ItemCell.self, forCellWithReuseIdentifier: ItemCell.identifier)
+        collectionView.refreshControl = self.refreshControl
         return collectionView
+    }()
+    
+    private lazy var noticeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "당겨서 새로고침 🔃"
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.isHidden = true
+        return label
     }()
     
     private lazy var dismissButton: UIButton = {
@@ -72,26 +72,27 @@ final class ItemPickerViewContrller: UIViewController {
     func bind(to viewModel: ItemPickerViewModel) {
         viewModel.ipvc.send(self)
         
+        viewModel.$items
+            .map(\.isEmpty)
+            .map { !$0 }
+            .assign(to: \.noticeLabel.isHidden, on: self)
+            .store(in: &cancellables)
+
         dismissButton.tapPublisher
             .subscribe(viewModel.dismiss)
             .store(in: &cancellables)
         
-        itemCategoryButton.menu = UIMenu(children: [
-            UIAction(title: "제목", handler: { _ in
-                viewModel.filterState = .title
-            }),
-
-            UIAction(title: "날짜", handler: { _ in
-                viewModel.filterState = .date
-            })
-        ])
-        
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
+        
+        refreshControl.controlEventPublisher(for: .valueChanged)
+            .subscribe(viewModel.refresh)
+            .store(in: &cancellables)
+        
     }
     
     private func layout() {
-        [ titleLabel, itemCategoryButton, seperator, collectionView, dismissButton ].forEach {
+        [ titleLabel, seperator, collectionView, dismissButton, noticeLabel ].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
@@ -104,15 +105,7 @@ final class ItemPickerViewContrller: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            itemCategoryButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12.0),
-            itemCategoryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12.0),
-            itemCategoryButton.widthAnchor.constraint(equalTo: itemCategoryButton.titleLabel!.widthAnchor, multiplier: 1.1),
-            itemCategoryButton.heightAnchor.constraint(equalTo: itemCategoryButton.titleLabel!.heightAnchor, multiplier: 1.1),
-            
-        ])
-        
-        NSLayoutConstraint.activate([
-            seperator.topAnchor.constraint(equalTo: itemCategoryButton.bottomAnchor, constant: 12.0),
+            seperator.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12.0),
             seperator.widthAnchor.constraint(equalTo: view.widthAnchor),
             seperator.heightAnchor.constraint(equalToConstant: 0.5)
         ])
@@ -131,6 +124,11 @@ final class ItemPickerViewContrller: UIViewController {
             dismissButton.heightAnchor.constraint(equalToConstant: 30.0),
             dismissButton.imageView!.widthAnchor.constraint(equalTo: dismissButton.widthAnchor, multiplier: 1.0),
             dismissButton.imageView!.heightAnchor.constraint(equalTo: dismissButton.heightAnchor, multiplier: 1.0),
+        ])
+        
+        NSLayoutConstraint.activate([
+            noticeLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            noticeLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
         ])
         
     }
