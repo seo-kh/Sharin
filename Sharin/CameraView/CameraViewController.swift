@@ -44,17 +44,17 @@ final class CameraViewController: UIViewController {
         layout()
         /// setting coachingOverlayView
         setupCoachingOverlay()
-        /// binding between View and Viewmodel.
-        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        /// run AR Environment
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.vertical, .horizontal]
         arView.session.run(config)
         arView.addGestureRecognizer(recognizer)
+        /// binding between View and Viewmodel.
+        bind()
         
     }
     
