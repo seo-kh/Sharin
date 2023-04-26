@@ -11,8 +11,8 @@ import RealityKit
 import ARKit
 
 final class CameraViewModel {
-    let itemStore = ItemStore()
-    let networkManager = NetworkManager()
+    let itemStore: ItemStore
+    let networkManager: NetworkManager
     
     private var cancellables = Set<AnyCancellable>()
     let itemPickerViewModel = ItemPickerViewModel()
@@ -27,7 +27,10 @@ final class CameraViewModel {
     let delete = PassthroughSubject<Void, Never>()
     let isLoading: AnyPublisher<Bool, Never>
     
-    init() {
+    init(itemStore: ItemStore, networkManager: NetworkManager) {
+        self.itemStore = itemStore
+        self.networkManager = networkManager
+        
         self.isActivate = itemPickerViewModel
             .itemPick
             .map { $0 != nil }

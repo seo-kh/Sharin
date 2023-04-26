@@ -15,7 +15,7 @@ final class CameraViewController: UIViewController {
 
     // MARK: - PROPERTIES
     /// View Model
-    let vm = CameraViewModel()
+    let cameraViewModel: CameraViewModel
     /// Parent Views
     let coachingOverlay = ARCoachingOverlayView()
     var arView: FocusARView!
@@ -31,6 +31,19 @@ final class CameraViewController: UIViewController {
     let activityView = UIActivityIndicatorView()
     /// cancellables (Combine)
     private var cancellables = Set<AnyCancellable>()
+    
+    init(viewModel: ContentViewModel) {
+        self.cameraViewModel = CameraViewModel(
+            itemStore: viewModel.itemStore,
+            networkManager: viewModel.networkManager
+        )
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LIFE CYCLE
     override func viewDidLoad() {
@@ -66,8 +79,8 @@ final class CameraViewController: UIViewController {
     
     // MARK: - BIND
     private func bind() {
-        vm.isActivate
-            .combineLatest(vm.isLoading)
+        cameraViewModel.isActivate
+            .combineLatest(cameraViewModel.isLoading)
             .sink { [weak self] in
                 self?.arView.focusEntity?.isEnabled = $0 && !$1
                 self?.cancelButton.isEnabled = $0 && !$1
@@ -83,7 +96,7 @@ final class CameraViewController: UIViewController {
             }
             .store(in: &cancellables)
         
-        vm.modelTranslator
+        cameraViewModel.modelTranslator
             .map { $0 != nil }
             .sink { [weak self] in
                 self?.deleteButton.isHidden = !$0
@@ -93,7 +106,7 @@ final class CameraViewController: UIViewController {
         
         selectButton.tapPublisher
             .map { self }
-            .subscribe(vm.item)
+            .subscribe(cameraViewModel.item)
             .store(in: &cancellables)
         
         // TODO: - memory button
@@ -105,20 +118,20 @@ final class CameraViewController: UIViewController {
         
         checkButton.tapPublisher
             .map { self }
-            .subscribe(vm.check)
+            .subscribe(cameraViewModel.check)
             .store(in: &cancellables)
         
         cancelButton.tapPublisher
-            .subscribe(vm.cancel)
+            .subscribe(cameraViewModel.cancel)
             .store(in: &cancellables)
         
         recognizer.tapPublisher
             .map { ($0, self) }
-            .subscribe(vm.select)
+            .subscribe(cameraViewModel.select)
             .store(in: &cancellables)
         
         deleteButton.tapPublisher
-            .subscribe(vm.delete)
+            .subscribe(cameraViewModel.delete)
             .store(in: &cancellables)
     }
     
