@@ -119,10 +119,8 @@
 				AAC3C1C629F59CA80083EE12 /* GoogleService-Info.plist */,
 				AA01F47029C606E200D0115A /* AppDelegate.swift */,
 				AA01F47229C606E200D0115A /* SceneDelegate.swift */,
-				AA01F47429C606E200D0115A /* ContentViewController.swift */,
-				AA45CEC329F90A7400566160 /* ContentViewModel.swift */,
-				AA01FD9729F5AB7100560C4A /* ItemStore.swift */,
-				AA01FD9D29F6664800560C4A /* NetworkManager.swift */,
+				AA45CEC629F90F6000566160 /* ContentView */,
+				AA45CEC529F90F5200566160 /* ResourceManager */,
 				6F9CF97729F1662C0015BE16 /* Preview */,
 				AAA314EA29D6A23D007502E2 /* Model */,
 				AAA314DA29D6A201007502E2 /* CameraView */,
@@ -148,6 +146,24 @@
 				AA01FD9929F6433C00560C4A /* UIImageView+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		AA45CEC529F90F5200566160 /* ResourceManager */ = {
+			isa = PBXGroup;
+			children = (
+				AA01FD9729F5AB7100560C4A /* ItemStore.swift */,
+				AA01FD9D29F6664800560C4A /* NetworkManager.swift */,
+			);
+			path = ResourceManager;
+			sourceTree = "<group>";
+		};
+		AA45CEC629F90F6000566160 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				AA01F47429C606E200D0115A /* ContentViewController.swift */,
+				AA45CEC329F90A7400566160 /* ContentViewModel.swift */,
+			);
+			path = ContentView;
 			sourceTree = "<group>";
 		};
 		AAA314DA29D6A201007502E2 /* CameraView */ = {
